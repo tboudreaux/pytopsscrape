@@ -1,0 +1,536 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>pyTOPSScrape.parse package &mdash; pyTOPSScrape 0.5 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pyTOPSScrape.scripts package" href="pyTOPSScrape.scripts.html" />
+    <link rel="prev" title="pyTOPSScrape.ext package" href="pyTOPSScrape.ext.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> pyTOPSScrape
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="pyTOPSScrape.api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyTOPSScrape.err.html">Errors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyTOPSScrape.ext.html">C Extensions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Parsing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyTOPSScrape.parse.abundance">pyTOPSScrape.parse.abundance module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyTOPSScrape.parse">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyTOPSScrape.scripts.html">Scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyTOPSScrape.misc.html">Misc</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyTOPSScrape</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>pyTOPSScrape.parse package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/pyTOPSScrape.parse.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pytopsscrape-parse-package">
+<h1>pyTOPSScrape.parse package<a class="headerlink" href="#pytopsscrape-parse-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pyTOPSScrape.parse.abundance">
+<span id="pytopsscrape-parse-abundance-module"></span><h2>pyTOPSScrape.parse.abundance module<a class="headerlink" href="#module-pyTOPSScrape.parse.abundance" title="Permalink to this headline">¶</a></h2>
+<p><strong>Author:</strong> Thomas M. Boudreaux</p>
+<p><strong>Created:</strong> May 2021</p>
+<p><strong>Last Modified:</strong> May 2021</p>
+<p>Module responsible for the parsing and handeling of chemical composition files
+in the form of</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#STD [Fe/H] [alpha/Fe] [C/Fe] [N/Fe] [O/Fe] [r/Fe] [s/Fe] C/O X Y,Z</span>
+<span class="n">F</span> <span class="o">-</span><span class="mf">1.13</span> <span class="mf">0.32</span> <span class="o">-</span><span class="mf">0.43</span> <span class="o">-</span><span class="mf">0.28</span> <span class="mf">0.31</span> <span class="o">-</span><span class="mf">1.13</span> <span class="o">-</span><span class="mf">1.13</span> <span class="mf">0.10</span> <span class="mf">0.7584</span> <span class="mf">0.2400</span><span class="p">,</span><span class="mf">1.599E-03</span>
+<span class="c1">#H He Li Be B C N O F Ne</span>
+<span class="mf">12.00</span> <span class="mf">10.898</span> <span class="o">-</span><span class="mf">0.08</span> <span class="mf">0.25</span> <span class="mf">1.57</span> <span class="mf">6.87</span> <span class="mf">6.42</span> <span class="mf">7.87</span> <span class="mf">3.43</span> <span class="mf">7.12</span>
+<span class="c1">#Na Mg Al Si P S Cl Ar K Ca</span>
+<span class="mf">5.11</span> <span class="mf">6.86</span> <span class="mf">5.21</span> <span class="mf">6.65</span> <span class="mf">4.28</span> <span class="mf">6.31</span> <span class="o">-</span><span class="mf">1.13</span> <span class="mf">5.59</span> <span class="mf">3.90</span> <span class="mf">5.21</span>
+<span class="c1">#Sc Ti V Cr Mn Fe Co Ni Cu Zn</span>
+<span class="mf">2.02</span> <span class="mf">3.82</span> <span class="mf">2.80</span> <span class="mf">4.51</span> <span class="mf">4.30</span> <span class="mf">6.37</span> <span class="mf">3.86</span> <span class="mf">5.09</span> <span class="mf">3.06</span> <span class="mf">2.30</span>
+<span class="c1">#Ga Ge As Se Br Kr Rb Sr Y Zr</span>
+<span class="mf">0.78</span> <span class="mf">1.39</span> <span class="mf">0.04</span> <span class="mf">1.08</span> <span class="mf">0.28</span> <span class="mf">0.99</span> <span class="mf">0.26</span> <span class="mf">0.61</span> <span class="mf">1.08</span> <span class="mf">1.45</span>
+<span class="c1">#Nb Mo Tc Ru Rh Pd Ag Cd In Sn</span>
+<span class="o">-</span><span class="mf">0.80</span> <span class="o">-</span><span class="mf">0.38</span> <span class="o">-</span><span class="mf">99.00</span> <span class="o">-</span><span class="mf">0.51</span> <span class="o">-</span><span class="mf">1.35</span> <span class="o">-</span><span class="mf">0.69</span> <span class="o">-</span><span class="mf">1.32</span> <span class="o">-</span><span class="mf">0.55</span> <span class="o">-</span><span class="mf">1.46</span> <span class="o">-</span><span class="mf">0.22</span>
+<span class="c1">#Sb Te I Xe Cs Ba La Ce Pr Nd</span>
+<span class="o">-</span><span class="mf">1.25</span> <span class="o">-</span><span class="mf">0.08</span> <span class="o">-</span><span class="mf">0.71</span> <span class="o">-</span><span class="mf">0.02</span> <span class="o">-</span><span class="mf">1.18</span> <span class="mf">1.05</span> <span class="o">-</span><span class="mf">0.03</span> <span class="mf">0.45</span> <span class="o">-</span><span class="mf">1.54</span> <span class="mf">0.29</span>
+<span class="c1">#Pm Sm Eu Gd Tb Dy Ho Er Tm Yb</span>
+<span class="o">-</span><span class="mf">99.00</span> <span class="o">-</span><span class="mf">1.30</span> <span class="o">-</span><span class="mf">0.61</span> <span class="o">-</span><span class="mf">1.19</span> <span class="o">-</span><span class="mf">1.96</span> <span class="o">-</span><span class="mf">1.16</span> <span class="o">-</span><span class="mf">1.78</span> <span class="o">-</span><span class="mf">1.34</span> <span class="o">-</span><span class="mf">2.16</span> <span class="o">-</span><span class="mf">1.42</span>
+<span class="c1">#Lu Hf Ta W Re Os Ir Pt Au Hg</span>
+<span class="o">-</span><span class="mf">2.16</span> <span class="o">-</span><span class="mf">1.41</span> <span class="o">-</span><span class="mf">2.38</span> <span class="o">-</span><span class="mf">1.41</span> <span class="o">-</span><span class="mf">2.00</span> <span class="o">-</span><span class="mf">0.86</span> <span class="o">-</span><span class="mf">0.88</span> <span class="o">-</span><span class="mf">0.64</span> <span class="o">-</span><span class="mf">1.34</span> <span class="o">-</span><span class="mf">1.09</span>
+<span class="c1">#Tl Pb Bi Po At Rn Fr Ra Ac Th</span>
+<span class="o">-</span><span class="mf">1.36</span> <span class="o">-</span><span class="mf">0.51</span> <span class="o">-</span><span class="mf">1.61</span> <span class="o">-</span><span class="mf">99.00</span> <span class="o">-</span><span class="mf">99.00</span> <span class="o">-</span><span class="mf">99.00</span> <span class="o">-</span><span class="mf">99.00</span> <span class="o">-</span><span class="mf">99.00</span> <span class="o">-</span><span class="mf">99.00</span> <span class="o">-</span><span class="mf">2.20</span>
+<span class="c1">#Pa U</span>
+<span class="o">-</span><span class="mf">99.00</span> <span class="o">-</span><span class="mf">2.80</span>
+</pre></div>
+</div>
+<p>Where each number is a(i) for the ith element and lines starting with # are
+comments.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="pyTOPSScrape.parse.abundance.a_to_mfrac">
+<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.parse.abundance.</span></span><span class="sig-name descname"><span class="pre">a_to_mfrac</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyTOPSScrape.parse.abundance.a_to_mfrac" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert <span class="math notranslate nohighlight">\(a(i)\)</span> for the <span class="math notranslate nohighlight">\(i^{th}\)</span> element to a mass fraction using the expression</p>
+<div class="math notranslate nohighlight">
+\[a(i) = \log(1.008) + \log(F_{i}) - \left[\log(X) + \log(m_{i})\right] + 12\]</div>
+<p>Or, equivilenetly, to go from <span class="math notranslate nohighlight">\(a(i)\)</span> to mass fraction</p>
+<div class="math notranslate nohighlight">
+\[F_{i} = \left[\frac{X m_{i}}{1.008}\right]\times 10^{a(i)-12}\]</div>
+<p>Where <span class="math notranslate nohighlight">\(F_{i}\)</span> is the math fraction of the <span class="math notranslate nohighlight">\(i^{th}\)</span> element,
+<span class="math notranslate nohighlight">\(X\)</span> is the Hydrogen mass fraction, and <span class="math notranslate nohighlight">\(m_{i}\)</span> is the ith
+element mass in hydrogen masses.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>float</em>) – <span class="math notranslate nohighlight">\(a(i)\)</span> for the <span class="math notranslate nohighlight">\(i^{th}\)</span> element. For example for He chem might
+be 10.93. For Hydrogen it would definititionally be 12.</p></li>
+<li><p><strong>amass</strong> (<em>float</em>) – Mass of <span class="math notranslate nohighlight">\(i^{th}\)</span> element given in atomic mass units.</p></li>
+<li><p><strong>X</strong> (<em>float</em>) – Hydrogen mass fraction</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>mf</strong> – Mass fraction of <span class="math notranslate nohighlight">\(i^{th}\)</span> element.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyTOPSScrape.parse.abundance.est_feh_from_Z_and_X">
+<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.parse.abundance.</span></span><span class="sig-name descname"><span class="pre">est_feh_from_Z_and_X</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">abunTable</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xt</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Zt</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#pyTOPSScrape.parse.abundance.est_feh_from_Z_and_X" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analytically estimate feh from Z and X</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>abunTable</strong> (<em>dict</em>) – Abundance Table dictionary in the form described in the docs for
+pysep.misc.abun.util.open_and_parse.</p></li>
+<li><p><strong>Xt</strong> (<em>float</em>) – Target X to move to</p></li>
+<li><p><strong>Zt</strong> (<em>float</em>) – Target Z to move to.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>FeH</strong> – [Fe/H] value to add to every a(i) for every tracked element i where
+i &gt; 2 (i.e all the metals).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyTOPSScrape.parse.abundance.gen_abun_map">
+<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.parse.abundance.</span></span><span class="sig-name descname"><span class="pre">gen_abun_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">abunTable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyTOPSScrape.parse.abundance.gen_abun_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate an analytic mapping between X, Y, Z and FeH given an abundance
+table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>abunTable</strong> (<em>str</em>) – Path of checmical abundance table to use for composition. Format of
+this table is defined in the ext module documentation.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>MetalAbunMap</strong> – Function build from interpolation of a grid of FeH, alpha/Fe, and
+a(He) which will returned the set of those values giving the
+composition most similar to an input X, Y, and Z.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>function(X,Y,Z) -&gt; (Fe/H,0.0,a(He))</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyTOPSScrape.parse.abundance.get_atomic_masses">
+<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.parse.abundance.</span></span><span class="sig-name descname"><span class="pre">get_atomic_masses</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyTOPSScrape.parse.abundance.get_atomic_masses" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a dict of atomic masses from Hydrogen all the way to plutonium</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>amasses</strong> – Dicionary of atomic masses in atomic mass units indexed by elemental
+symbol.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict of floats</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyTOPSScrape.parse.abundance.mfrac_to_a">
+<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.parse.abundance.</span></span><span class="sig-name descname"><span class="pre">mfrac_to_a</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mfrac</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyTOPSScrape.parse.abundance.mfrac_to_a" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert mass fracition of a given element to a for that element at a given
+hydrogen mass fraction using the equation</p>
+<div class="math notranslate nohighlight">
+\[a(i) = \log(1.008) + \log(F_{i}) - \left[\log(X) + \log(m_{i}) \right]\]</div>
+<p>Where <span class="math notranslate nohighlight">\(F_{i}\)</span> is the mass fraction for the <span class="math notranslate nohighlight">\(i^{th}\)</span> element and
+<span class="math notranslate nohighlight">\(m_{i}\)</span> is the mass fraction for the <span class="math notranslate nohighlight">\(i^{th}\)</span> element.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mfrac</strong> (<em>float</em>) – Mass fraction of the ith element.</p></li>
+<li><p><strong>amass</strong> (<em>float</em>) – Mass of the ith element in atomic mass units.</p></li>
+<li><p><strong>X</strong> (<em>float</em>) – Hydrogen mass fraction</p></li>
+<li><p><strong>Y</strong> (<em>float</em>) – Helium mass fraction, will be used as reference if X = 0</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>a</strong> – a for the ith element</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyTOPSScrape.parse.abundance.open_and_parse">
+<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.parse.abundance.</span></span><span class="sig-name descname"><span class="pre">open_and_parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyTOPSScrape.parse.abundance.open_and_parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open and parse the contents of a chemical composition file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Path to open file</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p><strong>parsed</strong> –</p>
+<p>Dictionary with two indexes.</p>
+<blockquote>
+<div><ul>
+<li><dl>
+<dt>Abundance Ratio</dt><dd><p>Includes the indexes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>STD (<em>str</em>)</p></li>
+<li><p>[Fe/H] (<em>float</em>)</p></li>
+<li><p>[alpha/Fe] (<em>float</em>)</p></li>
+<li><p>[C/Fe] (<em>float</em>)</p></li>
+<li><p>[N/Fe] (<em>float</em>)</p></li>
+<li><p>[O/Fe] (<em>float</em>)</p></li>
+<li><p>[r/Fe] (<em>float</em>)</p></li>
+<li><p>[s/Fe] (<em>float</em>)</p></li>
+<li><p>C/O (<em>float</em>)</p></li>
+<li><p>X (<em>float</em>)</p></li>
+<li><p>Y (<em>float</em>)</p></li>
+<li><p>Z (<em>float</em>)</p></li>
+</ul>
+</div></blockquote>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>RelativeAbundance</dt><dd><p>Includes an index for each chemical symbol given in the
+file format definition provided in the module
+documentation. These are all floats.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyTOPSScrape.parse.abundance.open_chm_file">
+<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.parse.abundance.</span></span><span class="sig-name descname"><span class="pre">open_chm_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyTOPSScrape.parse.abundance.open_chm_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open a chemical composition file (format defined in the module
+documentation). Split the contents by line then remove all lines which
+start with #. Finally split each line by both whitespace and commas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Path to file to open</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>contents</strong> – List of list of strings. The outter index selects the row, the
+inner index selectes the column within the row.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyTOPSScrape.parse.abundance.parse">
+<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.parse.abundance.</span></span><span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contents</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#pyTOPSScrape.parse.abundance.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse chem file in the format described in the module documentation.</p>
+<p>The abuundance ratios and abundances on the first row are added to a dict
+under the key [‘AbundanceRatio’] and sub indexed by the comments above each
+entry (Note that these are not read; rather, they are assumed to be the
+same in every file). The subsequent values (on all other rows) are added to
+the same dict under the key [‘RelativeAbundance’] and sub indexed by their
+chemical symbols.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>contents</strong> (<em>list</em>) – List of list of strings. The outter index selects the row, the
+inner index selected the column in the row and at each coordinate
+is a string which can be cast as a float. The one exception is that
+string at 0,0 is a charectar.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p><strong>extracted</strong> –</p>
+<p>Dictionary with two indexes.</p>
+<blockquote>
+<div><ul>
+<li><dl>
+<dt>Abundance Ratio</dt><dd><p>Includes the indexes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>STD (<em>str</em>)</p></li>
+<li><p>[Fe/H] (<em>float</em>)</p></li>
+<li><p>[alpha/Fe] (<em>float</em>)</p></li>
+<li><p>[C/Fe] (<em>float</em>)</p></li>
+<li><p>[N/Fe] (<em>float</em>)</p></li>
+<li><p>[O/Fe] (<em>float</em>)</p></li>
+<li><p>[r/Fe] (<em>float</em>)</p></li>
+<li><p>[s/Fe] (<em>float</em>)</p></li>
+<li><p>C/O (<em>float</em>)</p></li>
+<li><p>X (<em>float</em>)</p></li>
+<li><p>Y (<em>float</em>)</p></li>
+<li><p>Z (<em>float</em>)</p></li>
+</ul>
+</div></blockquote>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>RelativeAbundance</dt><dd><p>Includes an index for each chemical symbol given in the
+file format from the module documentation. These are all
+floats.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyTOPSScrape.parse.abundance.parse_abundance_map">
+<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.parse.abundance.</span></span><span class="sig-name descname"><span class="pre">parse_abundance_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#pyTOPSScrape.parse.abundance.parse_abundance_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse Hydrogen, Helium, and metal mass fraction out of a csv where each row
+is one composition, the first column is X, second is Y, and the third is Z.
+Comments may be included in the file if the first non white space character
+on the line is a hash.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Path to the abundance map. This should be an ascii file where each
+row contains X, Y, and Z (comma delimited with no white space).
+Each row will define one set of tables to be queried with the idea
+being that the entire file describes the entire set of tables to
+be queried.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>pContents</strong> – numpy array of all the compositions of length n where n is the
+number of rows whos first non white space character was not a hash.
+For a DSEP n=126. Along the second axis the first column is X, the
+second is Y, and the third is Z.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray(shape=(n,3))</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyTOPSScrape.parse">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyTOPSScrape.parse" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="pyTOPSScrape.scripts.html" class="btn btn-neutral float-right" title="pyTOPSScrape.scripts package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="pyTOPSScrape.ext.html" class="btn btn-neutral float-left" title="pyTOPSScrape.ext package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2022, Thomas Boudreaux.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
