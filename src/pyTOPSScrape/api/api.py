@@ -9,6 +9,7 @@ Psuedo API for querying TOPS webform
 from pyTOPSScrape.api.utils import format_TOPS_string
 from pyTOPSScrape.parse.abundance import parse_abundance_map
 from pyTOPSScrape.parse.abundance import gen_abun_map
+from pyTOPSScrape.parse.abundance import open_and_parse
 from pyTOPSScrape.ext.utils import parse_numfrac_file
 from pyTOPSScrape.ext.utils import call_num_frac
 
@@ -21,6 +22,7 @@ from bs4 import BeautifulSoup
 import mechanize
 
 from typing import TextIO
+import numpy as np
 
 TOPS_URL = "https://aphysics2.lanl.gov/apps/"
 
@@ -118,7 +120,7 @@ def TOPS_query(mixString: str, mixName: str, nAttempts: int) -> bytes:
     return tableHTML
 
 
-def query_and_parse(file: TextIO, outputDirectory: int, i: int, nAttempts: int=10):
+def query_and_parse(compList : list, outputDirectory: int, i: int, nAttempts: int=10):
     """
     Async coroutine to query TOPS webform, parse the output, and write that
     to disk.
@@ -136,9 +138,22 @@ def query_and_parse(file: TextIO, outputDirectory: int, i: int, nAttempts: int=1
         nAttempts : int, default=10
             Number of time to retry TOPS query before failing out
     """
-    compList, X, Y, Z = parse_numfrac_file(file, pbar=False)
+    # compList 
+    # compList, X, Y, Z = parse_numfrac_file(file, pbar=False)
+    # compList[1][1] = (Y if Y > 0 else 0)
+    # if Y < 0:
+    #     X = 1 - Z
     mixString = format_TOPS_string(compList)
-    mixName = f"X{int(X*1000)} Y{int(Y*1000)} Z{int(Z*1000)}"
+    X = compList[0][1]
+    Y = compList[1][1]
+    Z = sum([x[1] for x in compList[2:]])
+    Xfmt = (int(X*1000) if int(X*1000) > 0 else 0)
+    Yfmt = (int(Y*1000) if int(Y*1000) > 0 else 0)
+    Zfmt = (int(Z*1000) if int(Z*1000) > 0 else 0)
+    mixName = f"X{Xfmt} Y{Yfmt} Z{Zfmt}"
+    continuity = sum([x[1] for x in compList])
+
+    assert 1 - continuity <= 1e-3
 
     tableHTML = TOPS_query(mixString, mixName, nAttempts)
 
@@ -147,7 +162,8 @@ def query_and_parse(file: TextIO, outputDirectory: int, i: int, nAttempts: int=1
     filePath = f"{outputDirectory}/OP:{i}_{X}_{Y}_{Z}.dat"
     return (table, filePath)
 
-def TOPS_query_async_distributor(aFiles, outputDirectory, njobs=10):
+# def TOPS_query_async_distributor(aFiles, outputDirectory, njobs=10):
+def TOPS_query_async_distributor(compList, outputDirectory, njobs=10):
     """
     Distributes TOPS query jobs to different threads and gathers the results
     together. Writes out output.
@@ -161,12 +177,12 @@ def TOPS_query_async_distributor(aFiles, outputDirectory, njobs=10):
         njobs : int, default=10
             Number of concurrent jobs to allow at a time.
     """
-    with tqdm(total=len(aFiles), desc=f"Querying on {njobs} threads") as pbar:
+    with tqdm(total=len(compList), desc=f"Querying on {njobs} threads") as pbar:
         with ThreadPoolExecutor(njobs) as executor:
             jobs = list()
             results = list()
-            for i, file in enumerate(aFiles):
-                jobs.append(executor.submit(query_and_parse, file, outputDirectory, i))
+            for i, subComp in enumerate(compList):
+                jobs.append(executor.submit(query_and_parse, subComp, outputDirectory, i))
             for job in futures.as_completed(jobs):
                 results.append(job.result())
                 pbar.update(1)
@@ -227,20 +243,21 @@ def call(aMap: str, aTable: str, outputDir: str, jobs: int):
         jobs : int
             Number of threads to query TOPS webform on
     """
-    # Generate number fractions and save them to temporary files
-    aMappingF = gen_abun_map(aTable)
+    parsed = open_and_parse(aTable)
     pContents = parse_abundance_map(aMap)
-    aFiles = list()
-    for i, abund in tqdm(enumerate(pContents), total=len(pContents),
-                         desc="Generate FeH and Alpha/Fe"):
-        res = aMappingF(abund[0], abund[1], abund[2])
-        fp = call_num_frac(aTable, res[0], 0.0, res[2], abund[0], abund[1])
-        aFiles.append(fp)
-    # Using the number and mass fractions DSEP needs query the TOPS form
-    #  for each and save its output
-    TOPS_query_async_distributor(aFiles, outputDir, njobs=jobs)
+    compList = list()
+    for comp in pContents:
+        zScale = comp[2]/parsed['AbundanceRatio']['Z']
+        subComp = [
+                ('H', comp[0]),
+                ('He', comp[1])
+                  ]
+        for sym, data in parsed['RelativeAbundance'].items():
+            if sym != 'H' and sym != 'He':
+                subComp.append((sym, zScale * data['m_f']))
 
-    # Close all the temp files opened
-    for file in aFiles:
-        file.close()
+        compList.append(subComp)
+
+    TOPS_query_async_distributor(compList, outputDir, njobs=jobs)
+
 

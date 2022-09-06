@@ -6,6 +6,13 @@
 Utilities to help with the TOPS query api
 """
 import os
+
+TOPS_ELEM_ACCEPT = (
+        "H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al",
+        "Si", "P", "S", "Cl", "Ar", "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn",
+        "Fe", "Co", "Ni", "Cu", "Zn"
+        )
+
 def format_TOPS_string(compList : list) -> str:
     """
     Format the composition list from pasrse_abundance_file into a string in the
@@ -23,8 +30,11 @@ def format_TOPS_string(compList : list) -> str:
             string in the form of: "massFrac0 Element0 massFrac1 Element1 ..."
 
     """
-    TOPS_abundance_string = ' '.join([f"{x[1]:0.10f} {str(x[0])}"
-                                      for x in compList])
+    TOPS_abundance_string = ' '.join([
+        f"{x[1]:0.10f} {x[0]}"
+        for x in compList
+        if x[0] in TOPS_ELEM_ACCEPT
+                                    ])
     return TOPS_abundance_string
 
 def validate_extant_tables(

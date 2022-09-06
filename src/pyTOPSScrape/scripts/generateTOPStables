@@ -130,7 +130,7 @@ if __name__ == "__main__":
                         " TOPS", action='store_true')
     parser.add_argument("-o", "--output", help="file to write OPAL formated"
                         " table to", default="TOPAL.dat", type=str)
-    parser.add_argument("-hf", "--hardforce", action="store_true",
+    parser.add_argument("--hardforce", action="store_true",
                         help="Override all already extant directories",
                         default=False)
     parser.add_argument("-j", "--jobs", help="Number of processes to query the "
