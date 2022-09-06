@@ -1,7 +1,7 @@
 from pyTOPSScrape.ext import numfrac
 from pyTOPSScrape.parse.abundance import open_and_parse
 
-from io import BinaryIO
+from io import BytesIO
 import numpy as np
 import re
 from tqdm import tqdm
@@ -11,7 +11,7 @@ from tempfile import TemporaryFile
 from typing import Tuple, Union
 
 def parse_numfrac_file(
-        file: BinaryIO,
+        file: BytesIO,
         big: bool=False,
         pbar: bool=True
         ) -> Tuple[np.ndarray, float, float, float]:
@@ -23,7 +23,7 @@ def parse_numfrac_file(
 
     Parameters
     ----------
-        file : BinaryIO
+        file : BytesIO
             file like object to abundance file
         big : bool
             single composition file or one file with many composition
@@ -131,7 +131,7 @@ def call_num_frac(
         Y: Union[float, Tuple[float, float, int]],
         Xc : float,
         Yc : float,
-        ) -> BinaryIO:
+        ) -> BytesIO:
     """
     Given some grid of [Fe/H], [Alpha/Fe], and a(He) generate the number
     fractions files for every point on that grid. This is done using the
@@ -160,7 +160,7 @@ def call_num_frac(
             Current Y to use as a referece (only used if Xc == 0)
     Returns
     -------
-        fp : BinaryIO
+        fp : BytesIO
             Temporary file object storing results
     """
     # De-emnhance all H out of the star if X = 0
