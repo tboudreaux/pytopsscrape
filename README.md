@@ -1,6 +1,5 @@
-<h1> pyTOPSScrape </h1>
-<h2> A tool for scraping OPLIB opacities from the TOPS web form and converting
-them into a format more similar to that used by OPAL </h2>
+# pyTOPSScrape
+### A tool for scraping OPLIB opacities from the TOPS web form and converting them into a format more similar to that used by OPAL
 
 The <a href="https://aphysics2.lanl.gov/apps/">TOPS webform</a> provides access
 to some of the most up to date high temperature radiative opacities. However,
@@ -30,9 +29,9 @@ custom converter function (In that case you would use call and then some
 custom function in place of TOPS_2_OPAL)
 
 
-<h3> Install </h3>
+## Install
 
-<u>Prerequisites</u>
+#### Prerequisites
 <ul>
 	<li>python >= 3.8</li>
 	<li>mechanize >= 0.4.5</li>
@@ -42,10 +41,10 @@ custom function in place of TOPS_2_OPAL)
 	<li>importlib_resources >= 5.2.0 </li>
 </ul>
 
-<u>pip</u>
+#### pip
 pyTOPSScrape is not yet available on pip but will be soon.
 
-<u>Source</u>
+#### Source
 ```bash
 git clone git@github.com:tboudreaux/pytopsscrape.git
 cd pytopsscrape
