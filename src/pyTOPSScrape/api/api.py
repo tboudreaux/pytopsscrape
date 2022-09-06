@@ -8,7 +8,6 @@ Psuedo API for querying TOPS webform
 
 from pyTOPSScrape.api.utils import format_TOPS_string
 from pyTOPSScrape.parse.abundance import parse_abundance_map
-from pyTOPSScrape.parse.abundance import gen_abun_map
 from pyTOPSScrape.parse.abundance import open_and_parse
 from pyTOPSScrape.ext.utils import parse_numfrac_file
 from pyTOPSScrape.ext.utils import call_num_frac
