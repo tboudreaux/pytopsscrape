@@ -22,6 +22,9 @@ an example use of which follows
 generateTOPStables GS98.abun rescalings.dat -d ./rawOutput -o GS98.opac -j 20
 ```
 
+Further examples and the data files needed to run them may be found in the
+examples directory of this repository.
+
 In addition to this bash script pyTOPSScrape provides a programmatic interface
 made up of primarily the pyTOPSScrape.api.call and pyTOPSScrape.api.TOPS_2_OPAL
 functions. These can be called individually if you wish to implement your own
