@@ -20,9 +20,9 @@ Paper [2]_
 
 [2] Colgan, James, et al. "A new generation of Los Alamos opacity tables." The Astrophysical Journal 817.2 (2016): 116.
 """
-from pyTOPSScrape.api.api import call
-from pyTOPSScrape.err.err import _error_check
-from pyTOPSScrape.api.convert import TOPS_2_OPAL
+from pyTOPSScrape.api import call
+from pyTOPSScrape.err import _error_check
+from pyTOPSScrape.api import TOPS_2_OPAL
 
 import os
 import argparse
