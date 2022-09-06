@@ -6,4 +6,4 @@
 
 # Using the already fetched results saved in the directory rawOutput generate 
 # the OPAL table GS98.opac
-generateTOPStables ./GS98.abun ./exampleAbunMap -d rawOutput -o GS98.opac --nofetch
+generateTOPStables ./exampleDataFiles/GS98.abun ./exampleDataFiles/exampleAbunMap.dat -d rawOutput -o GS98.opac --nofetch

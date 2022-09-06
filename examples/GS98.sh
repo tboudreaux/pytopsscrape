@@ -5,4 +5,4 @@
 # Query the tops webform using 20 workers saving the raw output from the webform
 # to files in the rawOutput directory. The final result will be saved to
 # the file GS98.opac
-generateTOPStables ./GS98.abun ./exampleAbunMap -d rawOutput -o GS98.opac -j 20
+generateTOPStables ./exampleDataFiles/GS98.abun ./exampleDataFiles/exampleAbunMap.dat -d rawOutput -o GS98.opac -j 20
