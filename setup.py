@@ -7,15 +7,6 @@ import os
 import numpy
 from sysconfig import get_paths
 
-libnumfrac = npyExt(
-        'pyTOPSScrape.ext.numfrac',
-        sources=['src/pyTOPSScrape/ext/src/numFracFromTable.cpp'],
-        include_dirs=[
-            get_paths()['include'],
-            ],
-        extra_compile_args=["-fPIC"],
-        )
-
 
 with open("README.md", "r", encoding="utf-8") as f:
     long_description = f.read()
@@ -54,6 +45,5 @@ setup(
             'src/pyTOPSScrape/scripts/generateTOPStables',
         ],
         # cmdclass={'install': extInstall},
-        ext_modules=[libnumfrac],
         zip_safe=False
 )
