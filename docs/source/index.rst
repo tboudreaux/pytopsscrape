@@ -1,13 +1,12 @@
 Welcome to pysep's documentation!
 =================================
-.. automodule:: pyTOPSScrape.scripts
+.. automodule:: pyTOPSScrape
     :members:
 
 .. toctree::
    :maxdepth: 10
-
-   install
-   cliScripts
+    
+   Home <pyTOPSScrape>
    API <pyTOPSScrape.api>
    Errors <pyTOPSScrape.err>
    C Extensions <pyTOPSScrape.ext>
