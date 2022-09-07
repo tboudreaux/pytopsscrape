@@ -1,10 +1,17 @@
-#!/bin/bas
+#!/bin/bash
 
 echo "Testing API"
-python -m pytest api/test_api.py
+cd api
+python -m pytest test_api.py
+cd ..
 
 echo "Testing Parser"
-python -m pytest parse/test_abundance.py
+cd parse
+python -m pytest test_abundance.py
+cd ..
 
 echo "Testing Misc"
-python -m pytest misc/test_utils.py
+cd misc
+python -m pytest test_utils.py
+cd ..
+
