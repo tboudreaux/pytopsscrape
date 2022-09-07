@@ -22,8 +22,9 @@ setup(
         long_description_content_type="text/markdown",
         url="https://github.com/tboudreaux/pytopsscrape",
         classifiers=[
-            "Programming Language :: Python :: CPython",
+            "Programming Language :: Python",
             "Operating System :: POSIX :: Linux",
+            "Topic :: Scientific/Engineering :: Astronomy",
         ],
         package_dir={"": "src"},
         packages=setuptools.find_packages(where="src"),
