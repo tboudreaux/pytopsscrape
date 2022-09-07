@@ -41,7 +41,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="pyTOPSScrape.api package" href="pyTOPSScrape.api.html" /> 
+    <link rel="next" title="pyTOPSScrape package" href="pyTOPSScrape.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -87,6 +87,7 @@
             
             
               <ul>
+<li class="toctree-l1"><a class="reference internal" href="pyTOPSScrape.html">Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyTOPSScrape.api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyTOPSScrape.err.html">Errors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyTOPSScrape.ext.html">C Extensions</a></li>
@@ -160,17 +161,186 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-pyTOPSScrape.scripts">
-<span id="welcome-to-pysep-s-documentation"></span><h1>Welcome to pysep’s documentation!<a class="headerlink" href="#module-pyTOPSScrape.scripts" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-pyTOPSScrape">
+<span id="welcome-to-pysep-s-documentation"></span><h1>Welcome to pysep’s documentation!<a class="headerlink" href="#module-pyTOPSScrape" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="pytopsscrape">
+<h2>pyTOPSScrape<a class="headerlink" href="#pytopsscrape" title="Permalink to this headline">¶</a></h2>
+<p>A package which aims to make the programatic retrieval and use of high
+temperature radiative opacity tables from LANL somewhat simple</p>
+<p>pyTOPSScrape provides both a command line and a python interface. The command
+line interface runs through the generateTOPStables script (which will have been
+installed to your path when you installed this package)</p>
+<p>The python interface can mimic the full command line interface (including error
+checking and rate limiting) using the full_run function. If however, you wish
+to dig down to a more granular level the api module includes both query and
+convert submodules which may be composed as needed.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pypy">
+<h3>pypy<a class="headerlink" href="#pypy" title="Permalink to this headline">¶</a></h3>
+<p>&gt;&gt;&gt;pip install pyTOPSScrape</p>
+</div>
+<div class="section" id="github">
+<h3>GitHub<a class="headerlink" href="#github" title="Permalink to this headline">¶</a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="nd">@github</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">tboudreaux</span><span class="o">/</span><span class="n">pytopsscrape</span><span class="o">.</span><span class="n">git</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cd</span> <span class="n">pytopsscrape</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="command-line-usage-example">
+<h3>Command Line Usage Example<a class="headerlink" href="#command-line-usage-example" title="Permalink to this headline">¶</a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generateTOPStables</span> <span class="n">GS98</span><span class="o">.</span><span class="n">abun</span> <span class="n">rescalings</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="o">./</span><span class="n">rawOutput</span> <span class="o">-</span><span class="n">o</span> <span class="n">GS98</span><span class="o">.</span><span class="n">opac</span> <span class="o">-</span><span class="n">j</span> <span class="mi">20</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="input-file-formats">
+<h2>Input File Formats<a class="headerlink" href="#input-file-formats" title="Permalink to this headline">¶</a></h2>
+<p>pyTOPSScrape requires two input files to run. One (the first positional
+argument and hereafter the ‘composition file’) describes the base composition.
+The second positional argument (hereafter the ‘map file’) describes the set of
+classical compositions which will be queried from the TOPS web form. Each of
+these compositions will be a rescaling of the base composition (therefore the
+metal mass fractions wrt. Z will be maintained)</p>
+<div class="section" id="composition-file">
+<h3>Composition file<a class="headerlink" href="#composition-file" title="Permalink to this headline">¶</a></h3>
+<p>The composition file should be in the following form</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#STD [Fe/H] [alpha/Fe] [C/Fe] [N/Fe] [O/Fe] [r/Fe] [s/Fe] C/O X Y,Z</span>
+<span class="n">F</span> <span class="o">-</span><span class="mf">1.13</span> <span class="mf">0.32</span> <span class="o">-</span><span class="mf">0.43</span> <span class="o">-</span><span class="mf">0.28</span> <span class="mf">0.31</span> <span class="o">-</span><span class="mf">1.13</span> <span class="o">-</span><span class="mf">1.13</span> <span class="mf">0.10</span> <span class="mf">0.7584</span> <span class="mf">0.2400</span><span class="p">,</span><span class="mf">1.599E-03</span>
+<span class="c1">#H He Li Be B C N O F Ne</span>
+<span class="mf">12.00</span> <span class="mf">10.898</span> <span class="o">-</span><span class="mf">0.08</span> <span class="mf">0.25</span> <span class="mf">1.57</span> <span class="mf">6.87</span> <span class="mf">6.42</span> <span class="mf">7.87</span> <span class="mf">3.43</span> <span class="mf">7.12</span>
+<span class="c1">#Na Mg Al Si P S Cl Ar K Ca</span>
+<span class="mf">5.11</span> <span class="mf">6.86</span> <span class="mf">5.21</span> <span class="mf">6.65</span> <span class="mf">4.28</span> <span class="mf">6.31</span> <span class="o">-</span><span class="mf">1.13</span> <span class="mf">5.59</span> <span class="mf">3.90</span> <span class="mf">5.21</span>
+<span class="c1">#Sc Ti V Cr Mn Fe Co Ni Cu Zn</span>
+<span class="mf">2.02</span> <span class="mf">3.82</span> <span class="mf">2.80</span> <span class="mf">4.51</span> <span class="mf">4.30</span> <span class="mf">6.37</span> <span class="mf">3.86</span> <span class="mf">5.09</span> <span class="mf">3.06</span> <span class="mf">2.30</span>
+<span class="c1">#Ga Ge As Se Br Kr Rb Sr Y Zr</span>
+<span class="mf">0.78</span> <span class="mf">1.39</span> <span class="mf">0.04</span> <span class="mf">1.08</span> <span class="mf">0.28</span> <span class="mf">0.99</span> <span class="mf">0.26</span> <span class="mf">0.61</span> <span class="mf">1.08</span> <span class="mf">1.45</span>
+<span class="c1">#Nb Mo Tc Ru Rh Pd Ag Cd In Sn</span>
+<span class="o">-</span><span class="mf">0.80</span> <span class="o">-</span><span class="mf">0.38</span> <span class="o">-</span><span class="mf">99.00</span> <span class="o">-</span><span class="mf">0.51</span> <span class="o">-</span><span class="mf">1.35</span> <span class="o">-</span><span class="mf">0.69</span> <span class="o">-</span><span class="mf">1.32</span> <span class="o">-</span><span class="mf">0.55</span> <span class="o">-</span><span class="mf">1.46</span> <span class="o">-</span><span class="mf">0.22</span>
+<span class="c1">#Sb Te I Xe Cs Ba La Ce Pr Nd</span>
+<span class="o">-</span><span class="mf">1.25</span> <span class="o">-</span><span class="mf">0.08</span> <span class="o">-</span><span class="mf">0.71</span> <span class="o">-</span><span class="mf">0.02</span> <span class="o">-</span><span class="mf">1.18</span> <span class="mf">1.05</span> <span class="o">-</span><span class="mf">0.03</span> <span class="mf">0.45</span> <span class="o">-</span><span class="mf">1.54</span> <span class="mf">0.29</span>
+<span class="c1">#Pm Sm Eu Gd Tb Dy Ho Er Tm Yb</span>
+<span class="o">-</span><span class="mf">99.00</span> <span class="o">-</span><span class="mf">1.30</span> <span class="o">-</span><span class="mf">0.61</span> <span class="o">-</span><span class="mf">1.19</span> <span class="o">-</span><span class="mf">1.96</span> <span class="o">-</span><span class="mf">1.16</span> <span class="o">-</span><span class="mf">1.78</span> <span class="o">-</span><span class="mf">1.34</span> <span class="o">-</span><span class="mf">2.16</span> <span class="o">-</span><span class="mf">1.42</span>
+<span class="c1">#Lu Hf Ta W Re Os Ir Pt Au Hg</span>
+<span class="o">-</span><span class="mf">2.16</span> <span class="o">-</span><span class="mf">1.41</span> <span class="o">-</span><span class="mf">2.38</span> <span class="o">-</span><span class="mf">1.41</span> <span class="o">-</span><span class="mf">2.00</span> <span class="o">-</span><span class="mf">0.86</span> <span class="o">-</span><span class="mf">0.88</span> <span class="o">-</span><span class="mf">0.64</span> <span class="o">-</span><span class="mf">1.34</span> <span class="o">-</span><span class="mf">1.09</span>
+<span class="c1">#Tl Pb Bi Po At Rn Fr Ra Ac Th</span>
+<span class="o">-</span><span class="mf">1.36</span> <span class="o">-</span><span class="mf">0.51</span> <span class="o">-</span><span class="mf">1.61</span> <span class="o">-</span><span class="mf">99.00</span> <span class="o">-</span><span class="mf">99.00</span> <span class="o">-</span><span class="mf">99.00</span> <span class="o">-</span><span class="mf">99.00</span> <span class="o">-</span><span class="mf">99.00</span> <span class="o">-</span><span class="mf">99.00</span> <span class="o">-</span><span class="mf">2.20</span>
+<span class="c1">#Pa U</span>
+<span class="o">-</span><span class="mf">99.00</span> <span class="o">-</span><span class="mf">2.80</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="map-file">
+<h3>Map file<a class="headerlink" href="#map-file" title="Permalink to this headline">¶</a></h3>
+<p>The map file should be in the following form</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">0.75</span><span class="p">,</span><span class="mf">0.24</span><span class="p">,</span><span class="mf">0.01</span>
+<span class="mf">0.75</span><span class="p">,</span><span class="mf">0.23</span><span class="p">,</span><span class="mf">0.02</span>
+</pre></div>
+</div>
+<p>Where each row is X,Y,Z. The number of rows in this file will correspond to the
+number of queries issues against the TOPS web form</p>
+</div>
+</div>
+<div class="section" id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<p>pyTOPSScrape ships with a number of tests which should be run to make sure that
+it installed correctly on your system. Additionally, as it is reliant on an
+external server it is a certainty that one day it will break. To run the tests
+a script has been included. From the pyTOPSScrape root directory</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cd</span> <span class="n">tests</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="o">./</span><span class="n">runTests</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="etiquette">
+<h2>Etiquette<a class="headerlink" href="#etiquette" title="Permalink to this headline">¶</a></h2>
+<p>pyTOPSScrape makes use web servers hosted at Los Alamos National Labs (LANL).
+Before releasing this software I spoke with the T-1 group at LANL and received
+their assent. However, try to limit requests made against their web servers as
+much as possible. Obviously, if you are querying  a few hundred tables because
+your stellar evolution code needs a few hundred opacity tables there is little
+to be done; however, do try and make sure that you have sorted out all any bugs
+or typos in your input files before you query so that you wont have to query
+multiple times.</p>
+<p>Additionally, pyTOPSScrape caches the rawQuery results. This is so that if you
+want to implement your own converted you can do so without constantly re
+running the query functions. These results are cached in whatever directory is
+set in the –outputDirectory (or -d) command line option. To call the command
+line interface with cache usage enabled use the –nofetch flag.</p>
+</div>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="pyTOPSScrape.html">Home</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyTOPSScrape.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.api.html">pyTOPSScrape.api package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.api.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.api.html#module-pyTOPSScrape.api.api">pyTOPSScrape.api.api module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.api.html#module-pyTOPSScrape.api.convert">pyTOPSScrape.api.convert module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.api.html#module-pyTOPSScrape.api.utils">pyTOPSScrape.api.utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.api.html#module-pyTOPSScrape.api">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.err.html">pyTOPSScrape.err package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.err.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.err.html#module-pyTOPSScrape.err.err">pyTOPSScrape.err.err module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.err.html#module-pyTOPSScrape.err">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.misc.html">pyTOPSScrape.misc package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.misc.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="pyTOPSScrape.misc.dataFiles.html">pyTOPSScrape.misc.dataFiles package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="pyTOPSScrape.misc.dataFiles.html#module-pyTOPSScrape.misc.dataFiles">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.misc.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.misc.html#module-pyTOPSScrape.misc.utils">pyTOPSScrape.misc.utils module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="pyTOPSScrape.misc.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.misc.html#module-pyTOPSScrape.misc">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.parse.html">pyTOPSScrape.parse package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.parse.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.parse.html#module-pyTOPSScrape.parse.abundance">pyTOPSScrape.parse.abundance module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.parse.html#module-pyTOPSScrape.parse">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.scripts.html">pyTOPSScrape.scripts package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.scripts.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.scripts.html#module-pyTOPSScrape.scripts.main">pyTOPSScrape.scripts.main module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.scripts.html#module-pyTOPSScrape.scripts">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyTOPSScrape.html#module-pyTOPSScrape">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.html#pytopsscrape">pyTOPSScrape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.html#installation">Installation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.html#pypy">pypy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.html#github">GitHub</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.html#command-line-usage-example">Command Line Usage Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.html#input-file-formats">Input File Formats</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.html#composition-file">Composition file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.html#map-file">Map file</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.html#testing">Testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.html#etiquette">Etiquette</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="pyTOPSScrape.api.html">API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pyTOPSScrape.api.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyTOPSScrape.api.html#module-pyTOPSScrape.api.api">pyTOPSScrape.api.api module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyTOPSScrape.api.html#module-pyTOPSScrape.api.convert">pyTOPSScrape.api.convert module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.api.html#functions">Functions</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="pyTOPSScrape.api.html#module-pyTOPSScrape.api.convert">pyTOPSScrape.api.convert module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyTOPSScrape.api.html#module-pyTOPSScrape.api.utils">pyTOPSScrape.api.utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyTOPSScrape.api.html#module-pyTOPSScrape.api">Module contents</a></li>
 </ul>
@@ -183,8 +353,8 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pyTOPSScrape.ext.html">C Extensions</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pyTOPSScrape.ext.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyTOPSScrape.ext.html#module-pyTOPSScrape.ext.utils">pyTOPSScrape.ext.utils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyTOPSScrape.ext.html#module-pyTOPSScrape.ext">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyTOPSScrape.ext.html#pytopsscrape-ext-utils-module">pyTOPSScrape.ext.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyTOPSScrape.ext.html#module-contents">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pyTOPSScrape.parse.html">Parsing</a><ul>
@@ -194,6 +364,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pyTOPSScrape.scripts.html">Scripts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyTOPSScrape.scripts.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyTOPSScrape.scripts.html#module-pyTOPSScrape.scripts.main">pyTOPSScrape.scripts.main module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyTOPSScrape.scripts.html#module-pyTOPSScrape.scripts">Module contents</a></li>
 </ul>
 </li>
@@ -223,7 +395,7 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="pyTOPSScrape.api.html" class="btn btn-neutral float-right" title="pyTOPSScrape.api package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="pyTOPSScrape.html" class="btn btn-neutral float-right" title="pyTOPSScrape package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

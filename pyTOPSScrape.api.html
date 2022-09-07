@@ -42,7 +42,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="pyTOPSScrape.err package" href="pyTOPSScrape.err.html" />
-    <link rel="prev" title="Welcome to pysep’s documentation!" href="index.html" /> 
+    <link rel="prev" title="pyTOPSScrape package" href="pyTOPSScrape.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -88,13 +88,29 @@
             
             
               <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="pyTOPSScrape.html">Home</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pyTOPSScrape.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">pyTOPSScrape.api package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-pyTOPSScrape.api.api">pyTOPSScrape.api.api module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-pyTOPSScrape.api.convert">pyTOPSScrape.api.convert module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-pyTOPSScrape.api.utils">pyTOPSScrape.api.utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-pyTOPSScrape.api">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.err.html">pyTOPSScrape.err package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.misc.html">pyTOPSScrape.misc package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.parse.html">pyTOPSScrape.parse package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.scripts.html">pyTOPSScrape.scripts package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyTOPSScrape.html#module-pyTOPSScrape">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-pyTOPSScrape.api.api">pyTOPSScrape.api.api module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-pyTOPSScrape.api.convert">pyTOPSScrape.api.convert module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#functions">Functions</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyTOPSScrape.api.convert">pyTOPSScrape.api.convert module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-pyTOPSScrape.api.utils">pyTOPSScrape.api.utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-pyTOPSScrape.api">Module contents</a></li>
 </ul>
@@ -152,6 +168,8 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
+          <li><a href="pyTOPSScrape.html">pyTOPSScrape package</a> &raquo;</li>
+        
       <li>pyTOPSScrape.api package</li>
     
     
@@ -180,7 +198,7 @@
 <span id="pytopsscrape-api-api-module"></span><h2>pyTOPSScrape.api.api module<a class="headerlink" href="#module-pyTOPSScrape.api.api" title="Permalink to this headline">¶</a></h2>
 <p><strong>Author:</strong> Thomas M. Boudreaux</p>
 <p><strong>Created:</strong> September 2021</p>
-<p><strong>Last Modified:</strong> September 2021</p>
+<p><strong>Last Modified:</strong> September 2022</p>
 <p>Psuedo API for querying TOPS webform</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyTOPSScrape.api.api.TOPS_query">
@@ -206,13 +224,17 @@ which will be sumbittedi in the webform for mixture</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pyTOPSScrape.api.api.TOPS_query_async_distributor">
-<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.api.api.</span></span><span class="sig-name descname"><span class="pre">TOPS_query_async_distributor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">aFiles</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputDirectory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">njobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyTOPSScrape.api.api.TOPS_query_async_distributor" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.api.api.</span></span><span class="sig-name descname"><span class="pre">TOPS_query_async_distributor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">compList</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputDirectory</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">njobs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyTOPSScrape.api.api.TOPS_query_async_distributor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Distributes TOPS query jobs to different threads and gathers the results
 together. Writes out output.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>aFiles</strong> (<em>list of TextIO</em>) – List of file like objects to abundance files to be parsed</p></li>
+<li><p><strong>comList</strong> (<em>list</em>) – 3D list containing the mass frac for each element for each rescaled
+composition requested. For n compositions this should be of the shape
+(n, 30, 2). n compositions, 30 elements, then the first element of
+the last axis is the elemental symbol (i.e. H, He, Li, Be, etc…)
+and the second element is the mass fraction.</p></li>
 <li><p><strong>outputDirectory</strong> (<em>str</em>) – Path to directory to save TOPS query results to.</p></li>
 <li><p><strong>njobs</strong> (<em>int</em><em>, </em><em>default=10</em>) – Number of concurrent jobs to allow at a time.</p></li>
 </ul>
@@ -261,14 +283,17 @@ form</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pyTOPSScrape.api.api.query_and_parse">
-<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.api.api.</span></span><span class="sig-name descname"><span class="pre">query_and_parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">TextIO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputDirectory</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nAttempts</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyTOPSScrape.api.api.query_and_parse" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.api.api.</span></span><span class="sig-name descname"><span class="pre">query_and_parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">compList</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputDirectory</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nAttempts</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyTOPSScrape.api.api.query_and_parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Async coroutine to query TOPS webform, parse the output, and write that
 to disk.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>file</strong> (<em>TextIO</em>) – Abundance file to be parsed for the form as defined in the docstring
-for the function parse_numfrac_file</p></li>
+<li><p><strong>comList</strong> (<em>list</em>) – 3D list containing the mass frac for each element for each rescaled
+composition requested. For n compositions this should be of the shape
+(n, 30, 2). n compositions, 30 elements, then the first element of
+the last axis is the elemental symbol (i.e. H, He, Li, Be, etc…)
+and the second element is the mass fraction.</p></li>
 <li><p><strong>outputDirectory</strong> (<em>str</em>) – Path to write out results of TOPS webquery</p></li>
 <li><p><strong>i</strong> (<em>int</em>) – Index of composition so file name can properly keep track of where
 it is, even in parallel processing.</p></li>
@@ -306,89 +331,9 @@ which will be sumbittedi in the webform for mixture</p></li>
 <span id="pytopsscrape-api-convert-module"></span><h2>pyTOPSScrape.api.convert module<a class="headerlink" href="#module-pyTOPSScrape.api.convert" title="Permalink to this headline">¶</a></h2>
 <p><strong>Author:</strong> Thomas M. Boudreaux</p>
 <p><strong>Created:</strong> September 2021</p>
-<p><strong>Last Modified:</strong> September 2021</p>
+<p><strong>Last Modified:</strong> September 2022</p>
 <p>Main conversion code for TOPS api, responsible for takine many TOPS results and
 merging them into a single OPAL formate high temperature opacity file.</p>
-<div class="section" id="functions">
-<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><ul class="simple">
-<li><dl class="simple">
-<dt>comp_list_2_dict</dt><dd><p>Take a list containing compsoition information for a star in the form of
-[(‘Element Symbol’, massFraction, numberFraction),…] and convert that
-into a dictionary of the form:
-{‘Element Symbol’: (massFraction, numberFraction),..}.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>parse_RMO_TOPS_table_file</dt><dd><p>Given the path to a file queried from the TOPS webform put it into a
-computer usable form of 3 arrays. One array of mass density, one of
-LogT and one of log Rossland Mean Opacity</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>convert_rho_2_LogR</dt><dd><p>Maps a given kappa(rho,logT) parameter space onto a kappa(LogR, LogT) field
-through interpolation. The final field is the field that DSEP needs.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>extract_composition_path</dt><dd><p>Given the name of a TOPS return file (named in the format OP:n_X_Y_Z.dat)
-extract X, Y, and Z</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>format_opal_comp_table</dt><dd><p>Take in all the information from a given TOPS tables and format it
-to the proper format for DSEP to undersand. Leave in some placeholders
-so that in future table can be labeld as the proper number.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>format_OPAL_header</dt><dd><p>Writes the header of the opacity table that DSEP expects. This is written
-to be the same length (and basically the same contents) of the header
-from the OPACITY project. Not sure if that is required; however, if so
-I am matching it.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>format_OPAL_table</dt><dd><p>Given a dictionary of tables and a composition Dictionary for solar
-composition in a given mixture (AGSS08, GS98, etc…) merge all the
-information together into a string which can be written to disk and
-would be the format of an opacoty project table (what DSEP expects)</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>format_TOPS_to_OPAL</dt><dd><p>Take the path to a table queried from the TOPS web form and fully convert it
-into a table which can be directly read by DSEP. (Note this function
-does not write anything to disk; however, the return products can be
-written to disk)</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>rebuild_formated_table</dt><dd><p>Iterate over a list of opacity tables and a list of desired chemical
-compositions then replace the contents of the table list with the newly
-updated RMOs frmo the interpolation.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>TOPS_2_OPAL</dt><dd><p>Main conversoin utility to go between some set of TOPS tables and an OPAl
-table. Will take a set of 126 TOPS tables where each one is the opacity for
-one composition over a number of temperature and densities and rearange them
-into one large file with 126 tables within it. Each table will be over a
-range of temperatures and R values. To get to R val interpolation is used.</p>
-</dd>
-</dl>
-</li>
-</ul>
-</div></blockquote>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyTOPSScrape.api.convert.TOPS_2_OPAL">
 <span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.api.convert.</span></span><span class="sig-name descname"><span class="pre">TOPS_2_OPAL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outputDirectory</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aTable</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aMap</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nonRect</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyTOPSScrape.api.convert.TOPS_2_OPAL" title="Permalink to this definition">¶</a></dt>
@@ -417,7 +362,7 @@ OPAL tables.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pyTOPSScrape.api.convert.comp_list_2_dict">
-<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.api.convert.</span></span><span class="sig-name descname"><span class="pre">comp_list_2_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">compList</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">collections.abc.Iterator</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#pyTOPSScrape.api.convert.comp_list_2_dict" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.api.convert.</span></span><span class="sig-name descname"><span class="pre">comp_list_2_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">compList</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#pyTOPSScrape.api.convert.comp_list_2_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Take a list containing compsoition information for a star in the form of
 [(‘Element Symbol’, massFraction, numberFraction),…] and convert that
 into a dictionary of the form:
@@ -509,7 +454,7 @@ to be the “solar” compositon of whatever mix you are using so…
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pyTOPSScrape.api.convert.format_OPAL_table">
-<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.api.convert.</span></span><span class="sig-name descname"><span class="pre">format_OPAL_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tableDict</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compDict</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#pyTOPSScrape.api.convert.format_OPAL_table" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.api.convert.</span></span><span class="sig-name descname"><span class="pre">format_OPAL_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tableDict</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compDict</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#pyTOPSScrape.api.convert.format_OPAL_table" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a dictionary of tables and a composition Dictionary for solar
 composition in a given mixture (AGSS08, GS98, etc…) merge all the
 information together into a string which can be written to disk and
@@ -539,7 +484,7 @@ disk</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pyTOPSScrape.api.convert.format_TOPS_to_OPAL">
-<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.api.convert.</span></span><span class="sig-name descname"><span class="pre">format_TOPS_to_OPAL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">TOPSTable</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comp</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tnum</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upperNonRect</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pyTOPSScrape.api.convert.format_TOPS_to_OPAL" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.api.convert.</span></span><span class="sig-name descname"><span class="pre">format_TOPS_to_OPAL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">TOPSTable</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comp</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tnum</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upperNonRect</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pyTOPSScrape.api.convert.format_TOPS_to_OPAL" title="Permalink to this definition">¶</a></dt>
 <dd><p>Take the path to a table queried from the TOPS web form and fully convert it
 into a table which can be directly read by DSEP. (Note this function
 does not write anything to disk; however, the return products can be
@@ -559,6 +504,9 @@ written to disk)</p>
 <li><p><strong>X</strong> (<em>float</em>) – Hydrogen mass fraction</p></li>
 <li><p><strong>Y</strong> (<em>float</em>) – Helium mass fraction</p></li>
 <li><p><strong>Z</strong> (<em>float</em>) – Metal mass fraction</p></li>
+<li><p><strong>fullTable</strong> (<em>str</em>) – The full table as a string which may be directly written to a file.
+Note that this includes all the relevant white space to allow this
+table to be parsed by DSEP.</p></li>
 <li><p><strong>LogR</strong> (<em>np.ndarray(shape=19)</em>) – Log R values which dsep expects</p></li>
 <li><p><strong>LogT</strong> (<em>np.ndarray(shape=70)</em>) – Log Temperature values which dsep expects.</p></li>
 <li><p><strong>LogRMO</strong> (<em>np.ndarray(shape=(70, 19))</em>) – Log rossland mean opacities for the LogT and LogR arrays</p></li>
@@ -638,7 +586,7 @@ LogT and one of log Rossland Mean Opacity</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pyTOPSScrape.api.convert.rebuild_formated_tables">
-<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.api.convert.</span></span><span class="sig-name descname"><span class="pre">rebuild_formated_tables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">formatedTables</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interpRMO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pContents</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upperNonRect</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nonRect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyTOPSScrape.api.convert.rebuild_formated_tables" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.api.convert.</span></span><span class="sig-name descname"><span class="pre">rebuild_formated_tables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">formatedTables</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interpRMO</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pContents</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upperNonRect</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nonRect</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pyTOPSScrape.api.convert.rebuild_formated_tables" title="Permalink to this definition">¶</a></dt>
 <dd><p>Iterate over a list of opacity tables and a list of desired chemical
 compositions then replace the contents of the table list with the newly
 updated RMOs frmo the interpolation.</p>
@@ -647,7 +595,7 @@ updated RMOs frmo the interpolation.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>formatedTables</strong> (<em>list of dicts</em>) – List of dictionaries holding three axis each. X, Z, and LogRMO.
 These are the “observed” values to be interpolared</p></li>
-<li><p><strong>interpRMO</strong> (<em>list of ndarrays</em>) – RMOs after interpolation to LogR-LogT space from rho-LogT space.</p></li>
+<li><p><strong>interpRMO</strong> (<em>ndarray</em>) – RMOs after interpolation to LogR-LogT space from rho-LogT space.</p></li>
 <li><p><strong>pContents</strong> (<em>np.array</em><em>(</em><em>shape=</em><em>(</em><em>n</em><em>, </em><em>3</em><em>)</em><em>)</em>) – Numpy array of all the compositions of length n.  For a dsep n=126.
 Along the second axis the first column is X, the second is Y, and
 the third is Z.</p></li>
@@ -680,7 +628,6 @@ These have been updated to reflect the compositions in pContents.</p>
 </dl>
 </dd></dl>
 
-</div>
 </div>
 <div class="section" id="module-pyTOPSScrape.api.utils">
 <span id="pytopsscrape-api-utils-module"></span><h2>pyTOPSScrape.api.utils module<a class="headerlink" href="#module-pyTOPSScrape.api.utils" title="Permalink to this headline">¶</a></h2>
@@ -743,7 +690,7 @@ opacity table</p>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="pyTOPSScrape.err.html" class="btn btn-neutral float-right" title="pyTOPSScrape.err package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to pysep’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pyTOPSScrape.html" class="btn btn-neutral float-left" title="pyTOPSScrape package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
