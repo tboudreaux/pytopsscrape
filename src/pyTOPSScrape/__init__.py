@@ -18,7 +18,7 @@ Installation
 pypy
 ----
 
->>>pip install pyTOPSScrape
+>>> pip install pyTOPSScrape
 
 GitHub
 ------
