@@ -321,7 +321,7 @@ metal mass fractions wrt. Z will be maintained)</p>
 </pre></div>
 </div>
 <p>Where each row is X,Y,Z. The number of rows in this file will correspond to the
-number of queries issues against the TOPS web form</p>
+number of queries issued against the TOPS web form</p>
 </div>
 </div>
 <div class="section" id="testing">
@@ -342,9 +342,10 @@ Before releasing this software I spoke with the T-1 group at LANL and received
 their assent. However, try to limit requests made against their web servers as
 much as possible. Obviously, if you are querying  a few hundred tables because
 your stellar evolution code needs a few hundred opacity tables there is little
-to be done; however, do try and make sure that you have sorted out all any bugs
-or typos in your input files before you query so that you wont have to query
-multiple times. We want to be respectful of of the generosity of LANL here!</p>
+to be done; however, do try and make sure that you have sorted out any and all
+bugs or typos in your input files before you query so that you won’t have to go
+back and query multiple times. We want to be respectful of of the generosity of
+LANL here!</p>
 <p>Additionally, pyTOPSScrape caches the rawQuery results. This is so that if you
 want to implement your own converted you can do so without constantly re
 running the query functions. These results are cached in whatever directory is
