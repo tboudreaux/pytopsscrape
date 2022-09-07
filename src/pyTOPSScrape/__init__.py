@@ -15,7 +15,7 @@ convert submodules which may be composed as needed.
 
 Installation
 ============
-pypy
+PyPi
 ----
 
 >>> pip install pyTOPSScrape
