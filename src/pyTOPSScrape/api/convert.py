@@ -1,74 +1,16 @@
 """
 **Author:** Thomas M. Boudreaux\n
 **Created:** September 2021\n
-**Last Modified:** September 2021
+**Last Modified:** September 2022
 
 Main conversion code for TOPS api, responsible for takine many TOPS results and
 merging them into a single OPAL formate high temperature opacity file.
-
-Functions
----------
-    - comp_list_2_dict
-        Take a list containing compsoition information for a star in the form of
-        [('Element Symbol', massFraction, numberFraction),...] and convert that
-        into a dictionary of the form:
-        {'Element Symbol': (massFraction, numberFraction),..}.
-
-    - parse_RMO_TOPS_table_file
-        Given the path to a file queried from the TOPS webform put it into a
-        computer usable form of 3 arrays. One array of mass density, one of
-        LogT and one of log Rossland Mean Opacity
-
-    - convert_rho_2_LogR
-        Maps a given kappa(rho,logT) parameter space onto a kappa(LogR, LogT) field
-        through interpolation. The final field is the field that DSEP needs.
-
-    - extract_composition_path
-        Given the name of a TOPS return file (named in the format OP:n_X_Y_Z.dat)
-        extract X, Y, and Z
-
-    - format_opal_comp_table
-        Take in all the information from a given TOPS tables and format it
-        to the proper format for DSEP to undersand. Leave in some placeholders
-        so that in future table can be labeld as the proper number.
-
-    - format_OPAL_header
-        Writes the header of the opacity table that DSEP expects. This is written
-        to be the same length (and basically the same contents) of the header
-        from the OPACITY project. Not sure if that is required; however, if so
-        I am matching it.
-
-    - format_OPAL_table
-        Given a dictionary of tables and a composition Dictionary for solar
-        composition in a given mixture (AGSS08, GS98, etc...) merge all the
-        information together into a string which can be written to disk and
-        would be the format of an opacoty project table (what DSEP expects)
-
-    - format_TOPS_to_OPAL
-        Take the path to a table queried from the TOPS web form and fully convert it
-        into a table which can be directly read by DSEP. (Note this function
-        does not write anything to disk; however, the return products can be
-        written to disk)
-
-    - rebuild_formated_table
-        Iterate over a list of opacity tables and a list of desired chemical
-        compositions then replace the contents of the table list with the newly
-        updated RMOs frmo the interpolation.
-
-    - TOPS_2_OPAL
-        Main conversoin utility to go between some set of TOPS tables and an OPAl
-        table. Will take a set of 126 TOPS tables where each one is the opacity for
-        one composition over a number of temperature and densities and rearange them
-        into one large file with 126 tables within it. Each table will be over a
-        range of temperatures and R values. To get to R val interpolation is used.
-
-
 """
 from pyTOPSScrape.parse import parse_abundance_map
 from pyTOPSScrape.misc.utils import get_target_log_R
 from pyTOPSScrape.misc.utils import get_target_log_T
-from pyTOPSScrape.ext.utils import get_base_composition
 from pyTOPSScrape.misc.utils import load_non_rect_map
+from pyTOPSScrape.parse import get_base_composition
 
 import os
 import re
@@ -78,7 +20,7 @@ from datetime import date
 import numpy as np
 from scipy.interpolate import interp2d
 
-from typing import Tuple
+from typing import Tuple, List, Union
 from collections.abc import Iterator, Iterable
 
 
@@ -87,7 +29,7 @@ from collections.abc import Iterator, Iterable
 # {'filler': [(row, number to be filled)]}
 
 def comp_list_2_dict(
-        compList: Iterator
+        compList: List[Tuple[str, float, float]]
         ) -> dict:
     """
     Take a list containing compsoition information for a star in the form of
@@ -377,6 +319,7 @@ def format_opal_comp_table(
         #  we want rectangulat tables for that interpolation.
         # TODO: Remove introspection as it is bad practice
         if hasattr(upperNonRect, "__iter__"):
+            assert upperNonRect is not None
             # cut data out from the bottom right of the table per DSEP
             for filler in OUTOFBOUNDS:
                 for row in OUTOFBOUNDS[filler]:
@@ -501,7 +444,7 @@ def format_OPAL_header(
     return '\n'.join([headerBaseString, '', AbuncenceSummary, ''])
 
 def format_OPAL_table(
-        tableDict: dict,
+        tableDict: List[dict],
         compDict: dict
         ) -> str:
     """
@@ -577,7 +520,7 @@ def format_TOPS_to_OPAL(
         comp: tuple,
         tnum: int,
         upperNonRect: np.ndarray=None
-        ) -> Tuple[str, float, float, float, np.ndarray, np.ndarray, np.ndarray]:
+        ) -> Tuple[str, float, float, float, str, np.ndarray, np.ndarray, np.ndarray]:
     """
     Take the path to a table queried from the TOPS web form and fully convert it
     into a table which can be directly read by DSEP. (Note this function
@@ -605,6 +548,10 @@ def format_TOPS_to_OPAL(
             Helium mass fraction
         Z : float
             Metal mass fraction
+        fullTable : str
+            The full table as a string which may be directly written to a file.
+            Note that this includes all the relevant white space to allow this
+            table to be parsed by DSEP.
         LogR : np.ndarray(shape=19)
             Log R values which dsep expects
         LogT : np.ndarray(shape=70)
@@ -628,7 +575,13 @@ def format_TOPS_to_OPAL(
 
     return metaLine, X, Y, Z, fullTable, LogR, LogT, LogRMO
 
-def rebuild_formated_tables(formatedTables, interpRMO, pContents, upperNonRect, nonRect = False):
+def rebuild_formated_tables(
+        formatedTables : List[dict],
+        interpRMO : np.ndarray,
+        pContents : np.ndarray,
+        upperNonRect: Union[np.ndarray, None],
+        nonRect : bool = False
+        ) -> List[dict]:
     """
     Iterate over a list of opacity tables and a list of desired chemical
     compositions then replace the contents of the table list with the newly
@@ -639,7 +592,7 @@ def rebuild_formated_tables(formatedTables, interpRMO, pContents, upperNonRect, 
         formatedTables : list of dicts
             List of dictionaries holding three axis each. X, Z, and LogRMO.
             These are the "observed" values to be interpolared
-        interpRMO : list of ndarrays
+        interpRMO : ndarray
             RMOs after interpolation to LogR-LogT space from rho-LogT space.
         pContents : np.array(shape=(n, 3))
             Numpy array of all the compositions of length n.  For a dsep n=126.
@@ -738,14 +691,21 @@ def TOPS_2_OPAL(
 
     upperNonRect = (load_non_rect_map() if nonRect else None)
 
-    sortedPaths = sorted(paths, key=lambda x: int(re.findall(r'(?:OP:)(\d+)',x)[0]))
+    sortedPaths = sorted(
+            paths,
+            key=lambda x: int(re.findall(r'(?:OP:)(\d+)',x)[0])
+            )
+
     for i, tablePath in tqdm(enumerate(sortedPaths), total=len(TOPSTables),
                              desc="Building content dictionary"):
         comp = pContents[i]
-        key = int(tablePath.split(':')[1].split('_')[0])
-        summary, X, Y, Z, table, *raw = format_TOPS_to_OPAL(tablePath,
-                                                            comp,
-                                                            i)
+
+        summary, X, Y, Z, table, *raw = format_TOPS_to_OPAL(
+                tablePath,
+                comp,
+                i
+                )
+
         tableSummaries.append(summary)
         OPALTables.append(table)
         formatedTables.append({
@@ -758,6 +718,7 @@ def TOPS_2_OPAL(
             "LogR": raw[0],
             "LogT": raw[1]
             })
+
     KappaT = np.array(list(map(lambda x: x['LogRMO'], formatedTables)))
     interpFormatedTables = rebuild_formated_tables(formatedTables,
                                                    KappaT,

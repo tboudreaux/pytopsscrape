@@ -1,7 +1,7 @@
 """
 **Author:** Thomas M. Boudreaux\n
 **Created:** May 2021\n
-**Last Modified:** May 2021
+**Last Modified:** September 2022
 
 Module responsible for the parsing and handeling of chemical composition files
 in the form of
@@ -38,6 +38,8 @@ comments.
 import re
 import argparse
 import numpy as np
+
+from typing import Tuple
 
 def mfrac_to_a(mfrac,amass,X,Y):
 	"""
@@ -93,7 +95,7 @@ def a_to_mfrac(a,amass,X):
 
         F_{i} = \\left[\\frac{X m_{i}}{1.008}\\right]\\times 10^{a(i)-12}
 
-    Where :math:`F_{i}` is the math fraction of the :math:`i^{th}` element,
+    Where :math:`F_{i}` is the mass fraction of the :math:`i^{th}` element,
     :math:`X` is the Hydrogen mass fraction, and :math:`m_{i}` is the ith
     element mass in hydrogen masses.
 
@@ -506,6 +508,49 @@ def open_and_parse(path):
     contents = open_chm_file(path)
     parsed = parse(contents)
     return parsed
+
+def get_base_composition(aTablePath : str) -> Tuple[list, float, float, float]:
+    """
+    For some abundance path return the "base" composition, this is mainly to be
+    used for headers.
+
+    Parameters
+    ----------
+        aTablePath : str
+            Path to the abundance table in the form as described in the
+            parseChemFile module documentation
+    Returns
+    -------
+        list
+            list of the composition in the form [('Element',massFrac,numberFrac),...]
+        float
+            Hydrogen mass fraction
+        float
+            Helium mass fraction
+        float
+            Metal mass fraction
+    """
+    aTable = open_and_parse(aTablePath)
+    X = aTable['AbundanceRatio']['X']
+    Y = aTable['AbundanceRatio']['Y']
+    Z = aTable['AbundanceRatio']['Z']
+    aHe = aTable['RelativeAbundance']['He']['a']
+    aMasses = get_atomic_masses()
+
+    norm = sum([
+        data['m_f']/aMasses[sym]
+        for sym, data in aTable['RelativeAbundance'].items()
+        ])
+
+    numFrac = lambda m_f, sym: (m_f/aMasses[sym])/norm
+
+    compList = [
+            (sym, data['m_f'], numFrac(data['m_f'], sym), data['m_f']/Z, 0, 0, 0)
+            for sym, data in aTable['RelativeAbundance'].items()
+               ]
+
+    return compList, X, Y, Z
+
 
 
 if __name__ == "__main__":

@@ -1,16 +1,14 @@
 """
 **Author:** Thomas M. Boudreaux\n
 **Created:** September 2021\n
-**Last Modified:** September 2021
+**Last Modified:** September 2022
 
 Psuedo API for querying TOPS webform
 """
 
 from pyTOPSScrape.api.utils import format_TOPS_string
-from pyTOPSScrape.parse.abundance import parse_abundance_map
-from pyTOPSScrape.parse.abundance import open_and_parse
-from pyTOPSScrape.ext.utils import parse_numfrac_file
-from pyTOPSScrape.ext.utils import call_num_frac
+from pyTOPSScrape.parse import parse_abundance_map
+from pyTOPSScrape.parse import open_and_parse
 
 from tqdm import tqdm
 
@@ -126,9 +124,12 @@ def query_and_parse(compList : list, outputDirectory: int, i: int, nAttempts: in
 
     Parameters
     ----------
-        file : TextIO
-            Abundance file to be parsed for the form as defined in the docstring
-            for the function parse_numfrac_file
+        comList : list
+            3D list containing the mass frac for each element for each rescaled
+            composition requested. For n compositions this should be of the shape
+            (n, 30, 2). n compositions, 30 elements, then the first element of 
+            the last axis is the elemental symbol (i.e. H, He, Li, Be, etc...)
+            and the second element is the mass fraction.
         outputDirectory : str
             Path to write out results of TOPS webquery
         i : int
@@ -137,11 +138,6 @@ def query_and_parse(compList : list, outputDirectory: int, i: int, nAttempts: in
         nAttempts : int, default=10
             Number of time to retry TOPS query before failing out
     """
-    # compList 
-    # compList, X, Y, Z = parse_numfrac_file(file, pbar=False)
-    # compList[1][1] = (Y if Y > 0 else 0)
-    # if Y < 0:
-    #     X = 1 - Z
     mixString = format_TOPS_string(compList)
     X = compList[0][1]
     Y = compList[1][1]
@@ -161,16 +157,19 @@ def query_and_parse(compList : list, outputDirectory: int, i: int, nAttempts: in
     filePath = f"{outputDirectory}/OP:{i}_{X}_{Y}_{Z}.dat"
     return (table, filePath)
 
-# def TOPS_query_async_distributor(aFiles, outputDirectory, njobs=10):
-def TOPS_query_async_distributor(compList, outputDirectory, njobs=10):
+def TOPS_query_async_distributor(compList : list, outputDirectory : str, njobs : int = 10):
     """
     Distributes TOPS query jobs to different threads and gathers the results
     together. Writes out output.
 
     Parameters
     ----------
-        aFiles : list of TextIO
-            List of file like objects to abundance files to be parsed
+        comList : list
+            3D list containing the mass frac for each element for each rescaled
+            composition requested. For n compositions this should be of the shape
+            (n, 30, 2). n compositions, 30 elements, then the first element of 
+            the last axis is the elemental symbol (i.e. H, He, Li, Be, etc...)
+            and the second element is the mass fraction.
         outputDirectory : str
             Path to directory to save TOPS query results to.
         njobs : int, default=10
