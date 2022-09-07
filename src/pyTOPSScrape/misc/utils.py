@@ -1,16 +1,9 @@
 """
 **Author:** Thomas M. Boudreaux\n
 **Created:** Febuary 2021\n
-**Last Modified:** July 2021\n
+**Last Modified:** September 2022\n
 
 Opacity utility functions
-
-Functions
----------
-    - get_target_log_R
-        Return a numpy array with the LogR values required by DSEP for high temperature opacity tables.
-    - get_target_log_T
-        Return a numpy array with the LogT values required by DSEP for high temperature opacity tables.
 """
 from pyTOPSScrape.misc import dataFiles
 
