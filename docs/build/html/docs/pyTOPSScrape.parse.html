@@ -43,7 +43,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="pyTOPSScrape.scripts package" href="pyTOPSScrape.scripts.html" />
-    <link rel="prev" title="pyTOPSScrape.ext package" href="pyTOPSScrape.ext.html" /> 
+    <link rel="prev" title="pyTOPSScrape.misc.dataFiles package" href="pyTOPSScrape.misc.dataFiles.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -89,6 +89,23 @@
             
             
               <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="pyTOPSScrape.html">Home</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pyTOPSScrape.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.api.html">pyTOPSScrape.api package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.err.html">pyTOPSScrape.err package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.misc.html">pyTOPSScrape.misc package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">pyTOPSScrape.parse package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-pyTOPSScrape.parse.abundance">pyTOPSScrape.parse.abundance module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-pyTOPSScrape.parse">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.scripts.html">pyTOPSScrape.scripts package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyTOPSScrape.html#module-pyTOPSScrape">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="pyTOPSScrape.api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyTOPSScrape.err.html">Errors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyTOPSScrape.ext.html">C Extensions</a></li>
@@ -148,6 +165,8 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
+          <li><a href="pyTOPSScrape.html">pyTOPSScrape package</a> &raquo;</li>
+        
       <li>pyTOPSScrape.parse package</li>
     
     
@@ -176,7 +195,7 @@
 <span id="pytopsscrape-parse-abundance-module"></span><h2>pyTOPSScrape.parse.abundance module<a class="headerlink" href="#module-pyTOPSScrape.parse.abundance" title="Permalink to this headline">¶</a></h2>
 <p><strong>Author:</strong> Thomas M. Boudreaux</p>
 <p><strong>Created:</strong> May 2021</p>
-<p><strong>Last Modified:</strong> May 2021</p>
+<p><strong>Last Modified:</strong> September 2022</p>
 <p>Module responsible for the parsing and handeling of chemical composition files
 in the form of</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#STD [Fe/H] [alpha/Fe] [C/Fe] [N/Fe] [O/Fe] [r/Fe] [s/Fe] C/O X Y,Z</span>
@@ -214,7 +233,7 @@ comments.</p>
 <p>Or, equivilenetly, to go from <span class="math notranslate nohighlight">\(a(i)\)</span> to mass fraction</p>
 <div class="math notranslate nohighlight">
 \[F_{i} = \left[\frac{X m_{i}}{1.008}\right]\times 10^{a(i)-12}\]</div>
-<p>Where <span class="math notranslate nohighlight">\(F_{i}\)</span> is the math fraction of the <span class="math notranslate nohighlight">\(i^{th}\)</span> element,
+<p>Where <span class="math notranslate nohighlight">\(F_{i}\)</span> is the mass fraction of the <span class="math notranslate nohighlight">\(i^{th}\)</span> element,
 <span class="math notranslate nohighlight">\(X\)</span> is the Hydrogen mass fraction, and <span class="math notranslate nohighlight">\(m_{i}\)</span> is the ith
 element mass in hydrogen masses.</p>
 <dl class="field-list simple">
@@ -236,50 +255,6 @@ be 10.93. For Hydrogen it would definititionally be 12.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pyTOPSScrape.parse.abundance.est_feh_from_Z_and_X">
-<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.parse.abundance.</span></span><span class="sig-name descname"><span class="pre">est_feh_from_Z_and_X</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">abunTable</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xt</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Zt</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#pyTOPSScrape.parse.abundance.est_feh_from_Z_and_X" title="Permalink to this definition">¶</a></dt>
-<dd><p>Analytically estimate feh from Z and X</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>abunTable</strong> (<em>dict</em>) – Abundance Table dictionary in the form described in the docs for
-pysep.misc.abun.util.open_and_parse.</p></li>
-<li><p><strong>Xt</strong> (<em>float</em>) – Target X to move to</p></li>
-<li><p><strong>Zt</strong> (<em>float</em>) – Target Z to move to.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>FeH</strong> – [Fe/H] value to add to every a(i) for every tracked element i where
-i &gt; 2 (i.e all the metals).</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pyTOPSScrape.parse.abundance.gen_abun_map">
-<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.parse.abundance.</span></span><span class="sig-name descname"><span class="pre">gen_abun_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">abunTable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyTOPSScrape.parse.abundance.gen_abun_map" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generate an analytic mapping between X, Y, Z and FeH given an abundance
-table.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>abunTable</strong> (<em>str</em>) – Path of checmical abundance table to use for composition. Format of
-this table is defined in the ext module documentation.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>MetalAbunMap</strong> – Function build from interpolation of a grid of FeH, alpha/Fe, and
-a(He) which will returned the set of those values giving the
-composition most similar to an input X, Y, and Z.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>function(X,Y,Z) -&gt; (Fe/H,0.0,a(He))</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="pyTOPSScrape.parse.abundance.get_atomic_masses">
 <span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.parse.abundance.</span></span><span class="sig-name descname"><span class="pre">get_atomic_masses</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyTOPSScrape.parse.abundance.get_atomic_masses" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a dict of atomic masses from Hydrogen all the way to plutonium</p>
@@ -290,6 +265,28 @@ symbol.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>dict of floats</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyTOPSScrape.parse.abundance.get_base_composition">
+<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.parse.abundance.</span></span><span class="sig-name descname"><span class="pre">get_base_composition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">aTablePath</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pyTOPSScrape.parse.abundance.get_base_composition" title="Permalink to this definition">¶</a></dt>
+<dd><p>For some abundance path return the “base” composition, this is mainly to be
+used for headers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>aTablePath</strong> (<em>str</em>) – Path to the abundance table in the form as described in the
+parseChemFile module documentation</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>list</em> – list of the composition in the form [(‘Element’,massFrac,numberFrac),…]</p></li>
+<li><p><em>float</em> – Hydrogen mass fraction</p></li>
+<li><p><em>float</em> – Helium mass fraction</p></li>
+<li><p><em>float</em> – Metal mass fraction</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -492,7 +489,7 @@ second is Y, and the third is Z.</p>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="pyTOPSScrape.scripts.html" class="btn btn-neutral float-right" title="pyTOPSScrape.scripts package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="pyTOPSScrape.ext.html" class="btn btn-neutral float-left" title="pyTOPSScrape.ext package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pyTOPSScrape.misc.dataFiles.html" class="btn btn-neutral float-left" title="pyTOPSScrape.misc.dataFiles package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

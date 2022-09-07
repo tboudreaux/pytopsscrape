@@ -9,7 +9,6 @@ Subpackages
 
    pyTOPSScrape.api
    pyTOPSScrape.err
-   pyTOPSScrape.ext
    pyTOPSScrape.misc
    pyTOPSScrape.parse
    pyTOPSScrape.scripts
