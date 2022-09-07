@@ -1,4 +1,4 @@
-Welcome to pysep's documentation!
+Welcome to pyTOPSScrape's documentation!
 =================================
 .. automodule:: pyTOPSScrape
     :members:
