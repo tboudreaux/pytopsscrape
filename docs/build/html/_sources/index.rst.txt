@@ -9,7 +9,6 @@ Welcome to pyTOPSScrape's documentation!
    Home <pyTOPSScrape>
    API <pyTOPSScrape.api>
    Errors <pyTOPSScrape.err>
-   C Extensions <pyTOPSScrape.ext>
    Parsing <pyTOPSScrape.parse>
    Scripts <pyTOPSScrape.scripts>
    Misc <pyTOPSScrape.misc>
