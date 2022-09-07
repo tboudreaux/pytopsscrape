@@ -101,7 +101,7 @@ much as possible. Obviously, if you are querying  a few hundred tables because
 your stellar evolution code needs a few hundred opacity tables there is little
 to be done; however, do try and make sure that you have sorted out all any bugs
 or typos in your input files before you query so that you wont have to query
-multiple times.
+multiple times. We want to be respectful of of the generosity of LANL here!
 
 Additionally, pyTOPSScrape caches the rawQuery results. This is so that if you
 want to implement your own converted you can do so without constantly re
