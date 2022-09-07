@@ -2,6 +2,7 @@
 ### A tool for scraping OPLIB opacities from the TOPS web form and converting them into a format more similar to that used by OPAL
 
 <a href="https://tboudreaux.github.io/pytopsscrape/">Official Documentation</a>
+<a href="https://algebrist.com/~tboudreaux/docs/pyTOPSScrape/">Documentation Mirror</a>
 
 The <a href="https://aphysics2.lanl.gov/apps/">TOPS webform</a> provides access
 to some of the most up to date high temperature radiative opacities. However,
