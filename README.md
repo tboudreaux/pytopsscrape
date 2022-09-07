@@ -57,3 +57,9 @@ python setup.py install
 ```
 
 
+## Current Potential Issues
+There seem to be small variations in the results I get from the web form for
+the same inputs between queries. I have yet to track down if this is on my end
+of on there end but be aware of this. (This also makes some of the tests fail
+as I am doing a character to character check and not a numeric similarity
+within threshold check)
