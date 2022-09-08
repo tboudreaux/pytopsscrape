@@ -92,8 +92,8 @@ a script has been included. From the pyTOPSScrape root directory
 >>> cd tests
 >>> ./runTests.sh
 
-Etiquette
-=========
+Etiquette & Cacheing
+====================
 pyTOPSScrape makes use web servers hosted at Los Alamos National Labs (LANL).
 Before releasing this software I spoke with the T-1 group at LANL and received
 their assent. However, try to limit requests made against their web servers as
@@ -104,10 +104,22 @@ bugs or typos in your input files before you query so that you won't have to go
 back and query multiple times. We want to be respectful of of the generosity of
 LANL here!
 
-Additionally, pyTOPSScrape caches the rawQuery results. This is so that if you
-want to implement your own converted you can do so without constantly re
-running the query functions. These results are cached in whatever directory is
-set in the --outputDirectory (or -d) command line option. To call the command
-line interface with cache usage enabled use the --nofetch flag. 
+Additionally, pyTOPSScrape caches the raw query results to whatever directory
+is specified by the -d or --outputDirectory flag. This is so that if you want
+to implement your own converted you can do so without constantly re running the
+query functions. These results are cached in whatever directory is set in the
+--outputDirectory (or -d) command line option. To call the command line
+interface with cache usage enabled use the --nofetch flag. If you want to fetch
+tables and don't want to run the conversion set use the no opal flag.
+
+As an example, if you have already queried the TOPS web form using the command 
+
+>>> generateTOPStables GS98.abun rescalings.dat -d ./rawOutput -o GS98.opac -j 20 --noopal
+
+this will save all the raw output to the directory ./rawOutput (if you run the
+first example from this docs page this will also cache the results). You can
+then convert these to DSEP's OPAL format using the command
+
+>>> generateTOPStables GS98.abun rescalings.dat -d ./rawOutput -o GS98.opac -j 20 --nofetch
 """
 from pyTOPSScrape.scripts.main import full_run
