@@ -12,6 +12,14 @@ pyTOPSScrape.parse.abundance module
    :undoc-members:
    :show-inheritance:
 
+pyTOPSScrape.parse.opal module
+------------------------------
+
+.. automodule:: pyTOPSScrape.parse.opal
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
