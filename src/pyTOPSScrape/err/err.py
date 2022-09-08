@@ -80,10 +80,8 @@ def _error_check(kwargs : dict, mode : int):
                 and validate_extant_tables(kwargs["outputDirectory"], "PLACEHOLDER")
              ):
             raise OSError(f"Output dir {kwargs['outputDirectory']} already exists"
-                           " and is validated as complete, set the --opal flag"
-                           " to generate OPAL compatible tables and set the"
-                           " --nofetch flag to skip the TOPS fetch portion of"
-                           " the program.")
+                           " and is validated as complete, set the --nofetch flag to skip the TOPS fetch portion of"
+                           " the program (This assues that the raw TOPS files have in fact already been cached in the outputDirectory). If you are sure that this is in error its likely the outputDirectory was made on a previous run. You can either delete this directory or use the --hardforce flag to force the program to run.")
     elif mode == 1:
         # A defined execption
         # If the directory exists but the TOPS files cannot be validated halt
