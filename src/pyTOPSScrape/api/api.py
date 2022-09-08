@@ -36,7 +36,7 @@ def submit_TOPS_form(
     ----------
         mixString : string
             string in the form of: "massFrac0 Element0 massFrac1 Element1 ..."
-            which will be sumbittedi in the webform for mixture
+            which will be submitted in the webform for mixture
         mixName : string
             name to be used in the webform
 
@@ -89,7 +89,7 @@ def TOPS_query(mixString: str, mixName: str, nAttempts: int) -> bytes:
     ----------
         mixString : string
             string in the form of: "massFrac0 Element0 massFrac1 Element1 ..."
-            which will be sumbittedi in the webform for mixture
+            which will be submitted in the webform for mixture
         mixName : string
             name to be used in the webform
         nAttemptes : int
@@ -98,7 +98,7 @@ def TOPS_query(mixString: str, mixName: str, nAttempts: int) -> bytes:
     Returns
     -------
         tableHTML : bytes
-            Table quired from TOPS cite.
+            Table queried from TOPS cite.
 
     """
     attempts = 0
