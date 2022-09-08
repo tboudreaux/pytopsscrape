@@ -110,7 +110,7 @@ to implement your own converted you can do so without constantly re running the
 query functions. These results are cached in whatever directory is set in the
 --outputDirectory (or -d) command line option. To call the command line
 interface with cache usage enabled use the --nofetch flag. If you want to fetch
-tables and don't want to run the conversion set use the no opal flag.
+tables and don't want to run the conversion set use the --noopal flag.
 
 As an example, if you have already queried the TOPS web form using the command 
 
