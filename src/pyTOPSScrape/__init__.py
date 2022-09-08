@@ -121,5 +121,13 @@ first example from this docs page this will also cache the results). You can
 then convert these to DSEP's OPAL format using the command
 
 >>> generateTOPStables GS98.abun rescalings.dat -d ./rawOutput -o GS98.opac -j 20 --nofetch
+
+Notes
+=====
+Website [1]_
+Paper Describing Opacity Tables [2]_
+
+[1] https://aphysics2.lanl.gov/apps/
+[2] Colgan, James, et al. "A new generation of Los Alamos opacity tables." The Astrophysical Journal 817.2 (2016): 116.
 """
 from pyTOPSScrape.scripts.main import full_run
