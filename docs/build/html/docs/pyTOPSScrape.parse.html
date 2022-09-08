@@ -97,6 +97,7 @@
 <li class="toctree-l3 current"><a class="current reference internal" href="#">pyTOPSScrape.parse package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-pyTOPSScrape.parse.abundance">pyTOPSScrape.parse.abundance module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-pyTOPSScrape.parse.opal">pyTOPSScrape.parse.opal module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-pyTOPSScrape.parse">Module contents</a></li>
 </ul>
 </li>
@@ -108,10 +109,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pyTOPSScrape.api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyTOPSScrape.err.html">Errors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyTOPSScrape.ext.html">C Extensions</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Parsing</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-pyTOPSScrape.parse.abundance">pyTOPSScrape.parse.abundance module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyTOPSScrape.parse.opal">pyTOPSScrape.parse.opal module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-pyTOPSScrape.parse">Module contents</a></li>
 </ul>
 </li>
@@ -472,6 +473,58 @@ second is Y, and the third is Z.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>np.ndarray(shape=(n,3))</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyTOPSScrape.parse.opal">
+<span id="pytopsscrape-parse-opal-module"></span><h2>pyTOPSScrape.parse.opal module<a class="headerlink" href="#module-pyTOPSScrape.parse.opal" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pyTOPSScrape.parse.opal.load_opal">
+<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.parse.opal.</span></span><span class="sig-name descname"><span class="pre">load_opal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pyTOPSScrape.parse.opal.load_opal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load both the opacity table as well as the LogR and LogT for each table.
+LogT and LogR are not actually taken from the table; rather, they are
+assumed to be the correct LogT and LogR and are simply constructed from the
+general LogR and LogT constuctors already present in pysep.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – path to opacity table to load.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>LogT</strong> (<em>np.ndarray(dtype=’float64’)</em>) – Numpy array of shape (70,) with each required LogT value in it.</p></li>
+<li><p><strong>LogR</strong> (<em>np.ndarray(dtype=’float64’)</em>) – Numpy array of shape (19,) wich each required LogR value in it.</p></li>
+<li><p><strong>p</strong> (<em>np.ndarray(dtype=’float64’)</em>) – array of shape (126, 70, 19) where the first axis is the
+composition axis for the 126 compositions which dsep expects, the
+second is the temperature axis, and the third is the R axis.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyTOPSScrape.parse.opal.parse_OPAL_opacity_table">
+<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.parse.opal.</span></span><span class="sig-name descname"><span class="pre">parse_OPAL_opacity_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#pyTOPSScrape.parse.opal.parse_OPAL_opacity_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the 126 tables out of a properly formated opacity table which dsep
+can understand. This idetifies all lines starting with Table # after the
+summary section and uses those to index where the tables begin. Given that
+dsep opacity tables are not square and that numpy can only handel
+rectangular data all rows are padded to the length of the longest row with
+np.nan. Therefore, nan(s) should be interprited as locations where the
+opacity table was undefined.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – path to opacity table</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>p</strong> – array of shape (126, 70, 19) where the first axis is the
+composition axis for the 126 compositions which dsep expects, the
+second is the temperature axis, and the third is the R axis.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
 </dd>
 </dl>
 </dd></dl>
