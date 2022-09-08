@@ -1,7 +1,7 @@
 """
 pyTOPSScrape
 ============
-A package which aims to make the programatic retrieval and use of high
+A package which aims to make the programmatic retrieval and use of high
 temperature radiative opacity tables from LANL somewhat simple
 
 pyTOPSScrape provides both a command line and a python interface. The command
@@ -11,7 +11,7 @@ installed to your path when you installed this package)
 The python interface can mimic the full command line interface (including error
 checking and rate limiting) using the full_run function. If however, you wish
 to dig down to a more granular level the api module includes both query and
-convert submodules which may be composed as needed.
+convert sub modules which may be composed as needed.
 
 Installation
 ============
