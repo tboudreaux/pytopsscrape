@@ -10,4 +10,6 @@ get yourself!
 
 
 ## Running Tests
+In order to run the tests you need to have pytest installed.
+
 All you should have to do to run the tests is run the ./runTests.sh script
