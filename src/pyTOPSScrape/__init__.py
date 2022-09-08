@@ -124,10 +124,12 @@ then convert these to DSEP's OPAL format using the command
 
 Notes
 =====
-Website [1]_
-Paper Describing Opacity Tables [2]_
+Website [1]
+
+Paper Describing Opacity Tables [2]
 
 [1] https://aphysics2.lanl.gov/apps/
+
 [2] Colgan, James, et al. "A new generation of Los Alamos opacity tables." The Astrophysical Journal 817.2 (2016): 116.
 """
 from pyTOPSScrape.scripts.main import full_run
