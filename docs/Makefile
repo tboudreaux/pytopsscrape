@@ -8,9 +8,6 @@ SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = source
 BUILDDIR      = build
 
-# Put it first so that "make" without argument is like "make help".
-examples:
-	cd ../examples/; ./printDocs.sh > ../docs/$(SOURCEDIR)/examples.rst
 
 help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
