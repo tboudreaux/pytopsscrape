@@ -1,4 +1,4 @@
-from pysep.opac.tops.api.utils import validate_extant_tables
+from pyTOPSScrape.api.utils import validate_extant_tables
 
 import os
 import shutil
