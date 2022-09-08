@@ -124,9 +124,9 @@ then convert these to DSEP's OPAL format using the command
 
 Notes
 =====
-Website [1]
+Website [1]_
 
-Paper Describing Opacity Tables [2]
+Paper Describing Opacity Tables [2]_
 
 [1] https://aphysics2.lanl.gov/apps/
 
