@@ -53,7 +53,7 @@ pyTOPSScrape is not yet available on pip but will be soon.
 
 #### Source
 ```bash
-git clone git@github.com:tboudreaux/pytopsscrape.git
+git clone https://github.com/tboudreaux/pytopsscrape.git
 cd pytopsscrape
 python setup.py install
 ```

@@ -23,7 +23,7 @@ PyPi
 GitHub
 ------
 
->>> git clone git@github.com:tboudreaux/pytopsscrape.git
+>>> git clone https://github.com/tboudreaux/pytopsscrape.git
 >>> cd pytopsscrape
 >>> python setup.py install
 
