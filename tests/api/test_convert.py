@@ -17,11 +17,11 @@ def test_comp_list_2_dict():
 def test_parse_RMO_TOPS_table_file():
     testFile = "../scripts/rawOutputCacheForNoFetchTest/OP:76_0.7_0.22_0.07982056908314321.dat"
 
-    from pyTOPSScrape.api.convert import parse_RMO_TOPS_table_file
+    from pyTOPSScrape.parse import load_tops
     import pickle
     import numpy as np
 
-    testResult = parse_RMO_TOPS_table_file(testFile)
+    testResult = load_tops(testFile)
 
     with open("./parseRMOTopsTarget.pkl", 'rb') as f:
         target = pickle.load(f)
@@ -40,11 +40,11 @@ def test_convert_rho_2_LogR():
     testFile = "../scripts/rawOutputCacheForNoFetchTest/OP:76_0.7_0.22_0.07982056908314321.dat"
 
     from pyTOPSScrape.api.convert import convert_rho_2_LogR
-    from pyTOPSScrape.api.convert import parse_RMO_TOPS_table_file
+    from pyTOPSScrape.parse import load_tops
     import pickle
     import numpy as np
 
-    rho, LogT, RMO = parse_RMO_TOPS_table_file(testFile)
+    rho, LogT, RMO = load_tops(testFile)
 
     testResult = convert_rho_2_LogR(rho, LogT, RMO)
 
@@ -74,10 +74,10 @@ def test_extract_composition_path():
 def generate_parse_RMO_TOPS_table_file_target():
     testFile = "../scripts/rawOutputCacheForNoFetchTest/OP:76_0.7_0.22_0.07982056908314321.dat"
 
-    from pyTOPSScrape.api.convert import parse_RMO_TOPS_table_file
+    from pyTOPSScrape.parse import load_tops
     import pickle
 
-    testResult = parse_RMO_TOPS_table_file(testFile)
+    testResult = load_tops(testFile)
 
     with open("./parseRMOTopsTarget.pkl", 'wb') as f:
         pickle.dump(testResult, f)
@@ -86,10 +86,10 @@ def generate_convert_rho_2_LogR_target():
     testFile = "../scripts/rawOutputCacheForNoFetchTest/OP:76_0.7_0.22_0.07982056908314321.dat"
 
     from pyTOPSScrape.api.convert import convert_rho_2_LogR
-    from pyTOPSScrape.api.convert import parse_RMO_TOPS_table_file
+    from pyTOPSScrape.parse import load_tops
     import pickle
 
-    rho, LogT, RMO = parse_RMO_TOPS_table_file(testFile)
+    rho, LogT, RMO = load_tops(testFile)
 
     testResult = convert_rho_2_LogR(rho, LogT, RMO)
 

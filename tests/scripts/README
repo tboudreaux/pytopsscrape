@@ -1,4 +1,11 @@
 THIS TEST IS NOT YET FULLY IMPLIMENTED, DO NOT USE
 
 See the note at the bottom of the repo readme for a rough explination of
-why these tests are currently failing
+why these tests are currently failing. Moreover, I think there are some
+floating point rounding issues that make bit for bit similarity tests an issue.
+
+As a proxy I have included a script to generate a comparison plot of opacity vs
+temperature at Log(R) = -1.5 (as it is throughout much of the radius of a main
+sequence star). You can run the test suite then run that script to generate a
+plot. You should see that the target and Test results are on top of each other
+while they differ by a few percent from the GS98 OPAL opacity curve.
