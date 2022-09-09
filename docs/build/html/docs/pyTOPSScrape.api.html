@@ -260,6 +260,19 @@ be given as an ascii file where ecach row is X,Y,Z</p></li>
 </ul>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<p>If you have some map of rescalings you would like to used at
+“./rescalings.dat” and you have a base composition in the correct form at
+“./comp.dat” then you can generate and cache the raw output for those rescalings of that composition using</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">call</span><span class="p">(</span><span class="s2">&quot;./rescalings.dat&quot;</span><span class="p">,</span> <span class="s2">&quot;./comp.dat&quot;</span><span class="p">,</span> <span class="s2">&quot;./cache&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will save the cache results to the folder ./cache (note that this
+folder must exist before calling call. Moreover, this will query using 5
+workers. You may increase this number to make call run faster; however,
+this will only work to a point. I find that around 20 workes is about the
+most that gives me any speed increase. This will somewhat depend on your
+computer though.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -634,6 +647,8 @@ opacity table</p>
 </div>
 <div class="section" id="module-pyTOPSScrape.api">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyTOPSScrape.api" title="Permalink to this headline">¶</a></h2>
+<p>The api module provides query and convert functionality for pyTOPSScrape.</p>
+<p>The function you are most likley interested in here is call().</p>
 </div>
 </div>
 

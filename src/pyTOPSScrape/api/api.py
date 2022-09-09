@@ -240,6 +240,21 @@ def call(aMap: str, aTable: str, outputDir: str, jobs: int):
             Path to directory save TOPS query results into
         jobs : int
             Number of threads to query TOPS webform on
+
+    Examples
+    --------
+    If you have some map of rescalings you would like to used at
+    "./rescalings.dat" and you have a base composition in the correct form at
+    "./comp.dat" then you can generate and cache the raw output for those rescalings of that composition using
+
+    >>> call("./rescalings.dat", "./comp.dat", "./cache", 5)
+
+    This will save the cache results to the folder ./cache (note that this
+    folder must exist before calling call. Moreover, this will query using 5
+    workers. You may increase this number to make call run faster; however,
+    this will only work to a point. I find that around 20 workes is about the
+    most that gives me any speed increase. This will somewhat depend on your
+    computer though.
     """
     parsed = open_and_parse(aTable)
     pContents = parse_abundance_map(aMap)
