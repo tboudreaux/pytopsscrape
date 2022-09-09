@@ -20,6 +20,14 @@ pyTOPSScrape.parse.opal module
    :undoc-members:
    :show-inheritance:
 
+pyTOPSScrape.parse.tops module
+------------------------------
+
+.. automodule:: pyTOPSScrape.parse.tops
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

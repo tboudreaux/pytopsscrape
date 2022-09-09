@@ -98,6 +98,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-pyTOPSScrape.parse.abundance">pyTOPSScrape.parse.abundance module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-pyTOPSScrape.parse.opal">pyTOPSScrape.parse.opal module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-pyTOPSScrape.parse.tops">pyTOPSScrape.parse.tops module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-pyTOPSScrape.parse">Module contents</a></li>
 </ul>
 </li>
@@ -113,6 +114,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-pyTOPSScrape.parse.abundance">pyTOPSScrape.parse.abundance module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-pyTOPSScrape.parse.opal">pyTOPSScrape.parse.opal module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyTOPSScrape.parse.tops">pyTOPSScrape.parse.tops module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-pyTOPSScrape.parse">Module contents</a></li>
 </ul>
 </li>
@@ -525,6 +527,63 @@ second is the temperature axis, and the third is the R axis.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyTOPSScrape.parse.tops">
+<span id="pytopsscrape-parse-tops-module"></span><h2>pyTOPSScrape.parse.tops module<a class="headerlink" href="#module-pyTOPSScrape.parse.tops" title="Permalink to this headline">¶</a></h2>
+<p><strong>Author:</strong> Thomas M. Boudreaux</p>
+<p><strong>Created:</strong> September 2021</p>
+<p><strong>Last Modified:</strong> September 2022</p>
+<p>Functions for parsing raw output from TOPS webform</p>
+<p class="rubric">Examples</p>
+<p>Say you have some raw output from the TOPS webform saved to a file called
+“rawOutputTest.dat”, then you may parse that with</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rho</span><span class="p">,</span> <span class="n">LogT</span><span class="p">,</span> <span class="n">RMO</span> <span class="o">=</span> <span class="n">load_tops</span><span class="p">(</span><span class="s2">&quot;rawOutputTest.dat&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="pyTOPSScrape.parse.tops.extract_composition_path">
+<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.parse.tops.</span></span><span class="sig-name descname"><span class="pre">extract_composition_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pyTOPSScrape.parse.tops.extract_composition_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given the name of a TOPS return file (named in the format OP:n_X_Y_Z.dat)
+extract X, Y, and Z</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>string</em>) – path to TOPS return file</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>X</strong> (<em>float</em>) – Hydrogen mass fraction</p></li>
+<li><p><strong>Y</strong> (<em>float</em>) – Helium mass fraction</p></li>
+<li><p><strong>Z</strong> (<em>Metal mass fraction</em>)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyTOPSScrape.parse.tops.load_tops">
+<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.parse.tops.</span></span><span class="sig-name descname"><span class="pre">load_tops</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">TOPSTable</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pyTOPSScrape.parse.tops.load_tops" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given the path to a file queried from the TOPS webform put it into a
+computer usable form of 3 arrays. One array of mass density, one of
+LogT and one of log Rossland Mean Opacity</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>TOPSTable</strong> (<em>string</em>) – Path to file queried from TOPS webform</p></li>
+<li><p><strong>n</strong> (<em>int</em><em>, </em><em>default=100</em>) – The size of density grid used in TOPS query form.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>rho</strong> (<em>np.ndarray(shape=n)</em>) – Array of mass densities (in cgs) parsed from TOPS table.</p></li>
+<li><p><strong>LogT</strong> (<em>np.ndarray(shape=m)</em>) – Array of temperatures (in Kelvin) parsed from TOPS table.</p></li>
+<li><p><strong>OPALTableInit</strong> (<em>np.ndarray(shape=(m,n))</em>) – Array of Rossland Mean Opacities parsed from TOPS table.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
