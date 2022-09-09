@@ -65,3 +65,12 @@ the same inputs between queries. I have yet to track down if this is on my end
 of on there end but be aware of this. (This also makes some of the tests fail
 as I am doing a character to character check and not a numeric similarity
 within threshold check)
+
+# Examples
+There are examples of the command line interface the the python interface in
+the examples directory of this repository. It is recommended you look at those
+before querying your own opacity files. The command line examples are all shell
+scripts with names that descibe that they are exmaples of while the python
+interface example is in the form of a Jupyter notebook in the
+examples/Notebooks directory. If you do not have jupyter installed on your
+computer you should be able to view the .ipynb file on github.
