@@ -7,10 +7,14 @@ Main conversion code for TOPS api, responsible for takine many TOPS results and
 merging them into a single OPAL formate high temperature opacity file.
 """
 from pyTOPSScrape.parse import parse_abundance_map
+from pyTOPSScrape.parse import load_tops
+from pyTOPSScrape.parse import get_base_composition
+
+from pyTOPSScrape.parse.tops import extract_composition_path
+
 from pyTOPSScrape.misc.utils import get_target_log_R
 from pyTOPSScrape.misc.utils import get_target_log_T
 from pyTOPSScrape.misc.utils import load_non_rect_map
-from pyTOPSScrape.parse import get_base_composition
 
 import os
 import re
@@ -22,8 +26,6 @@ from scipy.interpolate import interp2d
 
 from typing import Tuple, List, Union
 from collections.abc import Iterator, Iterable
-
-
 
 # Bounds of the OPAL formated tables, format is 
 # {'filler': [(row, number to be filled)]}
@@ -67,168 +69,6 @@ def comp_list_2_dict(
     compDict['K'] = (0.0,0.0,0.0,0.0,0.0,0.0)
     return compDict
 
-
-def parse_RMO_TOPS_table_file(
-        TOPSTable: str,
-        n: int=100
-        ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """
-    Given the path to a file queried from the TOPS webform put it into a
-    computer usable form of 3 arrays. One array of mass density, one of
-    LogT and one of log Rossland Mean Opacity
-
-    Parameters
-    ----------
-        TOPSTable : string
-            Path to file queried from TOPS webform
-
-        n : int, default=100
-            The size of density grid used in TOPS query form.
-
-    Returns
-    -------
-        rho : np.ndarray(shape=n)
-            Array of mass densities (in cgs) parsed from TOPS table.
-        LogT: np.ndarray(shape=m)
-            Array of temperatures (in Kelvin) parsed from TOPS table.
-        OPALTableInit : np.ndarray(shape=(m,n))
-            Array of Rossland Mean Opacities parsed from TOPS table.
-    """
-    with open(TOPSTable) as f:
-        # TOPS returns a table with non breaking spaces (\u00A0). These break
-        #  pythons regex so replace all of these with tabs at read in time
-        contents = f.read().replace("\u00A0", "\t")
-
-    # This regular expression locates n tables in the TOPS return file. If 
-    #  the header format of those tables chanegs this regex will also have
-    #  to change.
-    tgroups = re.findall(r"(Rosseland\s+and\s+Planck\s+opacities\s+and\s+"
-                         r"free\s+electrons\s+Density\s+Ross\s+opa\s+Planck\s+"
-                         r"opa\s+No\.\s+Free\s+Av\s+Sq\s+Free\s+(T=\s+\d+\.?\d+"
-                         r"E[-|+]\d+)\s+((\d\.\d+E[-|+]\d+"
-                         r"(\s+)?){{5}}\n?){{{}}})".format(n), contents)
-
-    # convert from keV in TOPS to K in DSEP
-    temperatures = np.array([float(x[1].split()[1])*11604525.0061657
-                            for x in tgroups])
-    # extract all of the RMO data from the TOPS files
-    # this is done by iterating through the first element of every tgroup.
-    #   on each of these elements a number following some amount of white space
-    #   is matched (white space is a nonmatching group) with a regex. Then,
-    #   those matches are all cast to floats. The first element per tgroup is
-    #   actually the temperature in kev, so this is stripped as we already
-    #   have those. Then the returned values for the tgroup is reshaped to
-    #   100,5 (rho, RMO, PO, number free, avg sq free) with 100 densities. 
-    #   At this point this is an in indexable equivilent to how the data is
-    #   stored in the TOPS file. 
-    subTables = np.array([np.array([float(y)
-                                     for y in
-                                     re.findall(r"(?:\s+)?(\d\.\d+E[-|+]\d{2})",
-                                                x[0])
-                                   ]
-                                  )[1:].reshape(100, 5)
-                          for x in
-                          tgroups])
-
-    rho = subTables[0, :, 0]
-    RMO = subTables[:, :, 1]
-
-    LogT = np.log10(temperatures)
-    logRMO = np.log10(RMO)
-
-    OPALTableInit = np.zeros(shape=(rho.shape[0], LogT.shape[0]))
-
-    # This transposes the table basically
-    for i, _ in enumerate(LogT):
-        OPALTableInit[:, i] = logRMO[i]
-    return rho, LogT, OPALTableInit
-
-def convert_rho_2_LogR(
-        rho: np.ndarray,
-        LogT: np.ndarray,
-        RMO: np.ndarray
-        ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """
-    Maps a given kappa(rho,logT) parameter space onto a kappa(LogR, LogT) field
-    through interpolation. The final field is the field that DSEP needs.
-
-    Parameters
-    ----------
-        rho  : np.ndarray
-            mass density array of size n
-        LogT : np.ndarray
-            LogT array of size m
-        RMO : np.ndarray
-            Opacity Array of size m x n
-
-
-    Returns
-    -------
-        targetLogR : np.ndarray(shape=19)
-            Log R values which dsep requires
-        targetLogR : np.ndarray(shape=70)
-            Lof T values which dsep requires
-        Opacity : np.ndarray(shape=(70, 19))
-            Opacity array now interpolated into LogR, LogT space from rho LogT
-            space and sampled at the exact LogR and LogT values required.
-    """
-    # build a function that can interpolate log opacity on a mass density log
-    #  temperature grid
-    kappaFunc = interp2d(LogT, rho, RMO, kind='cubic')
-
-    # mapping from T, R to rho
-    rhof = lambda T, R: R*((T*1e-6)**3)
-
-    # The target LogR an LogT grids which we would like to use
-    targetLogT = get_target_log_T()
-    targetLogR = get_target_log_R()
-
-    # The array to be filled with the converted opaicities
-    opacity = np.zeros(shape=(targetLogT.shape[0], targetLogR.shape[0]))
-
-    # This function maps the vector function kappaFunc to a scaler function
-    #  so that for a given target R and temperature array you get out an 
-    #  1D array not a 2D array. There is probably a more elegant way of doing
-    #  this. However, theis seems to work well enough and is not slow persay.
-    opacityF = lambda x, RTarg: kappaFunc(x, rhof(10**x, 10**RTarg))
-
-    for i, logR in enumerate(targetLogR):
-        # vectorize it so I can call it. However, this can only take a function
-        #  of one argument so use an anoymous function to hide the second
-        #  argument
-        f = np.vectorize(lambda x: opacityF(x, logR))
-        opacity[:, i] = f(targetLogT)
-
-    return targetLogR, targetLogT, opacity
-
-
-def extract_composition_path(
-        path: str
-        ) -> Tuple[float, float, float]:
-    """
-    Given the name of a TOPS return file (named in the format OP:n_X_Y_Z.dat)
-    extract X, Y, and Z
-
-    Parameters
-    ----------
-        path : string
-            path to TOPS return file
-
-    Returns
-    -------
-        X : float
-            Hydrogen mass fraction
-        Y : float
-            Helium mass fraction
-        Z : Metal mass fraction
-    """
-    filename = os.path.basename(path)
-    filename = filename.strip('.dat')
-    filenameParts = filename.split('_')
-    X = float(filenameParts[1])
-    Y = float(filenameParts[2])
-    Z = float(filenameParts[3])
-    return X, Y, Z
 
 
 def format_opal_comp_table(
@@ -515,6 +355,61 @@ def format_OPAL_table(
 
     return OPALFormatted
 
+def convert_rho_2_LogR(
+        rho: np.ndarray,
+        LogT: np.ndarray,
+        RMO: np.ndarray
+        ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """
+    Maps a given kappa(rho,logT) parameter space onto a kappa(LogR, LogT) field
+    through interpolation. The final field is the field that DSEP needs.
+    Parameters
+    ----------
+        rho  : np.ndarray
+            mass density array of size n
+        LogT : np.ndarray
+            LogT array of size m
+        RMO : np.ndarray
+            Opacity Array of size m x n
+    Returns
+    -------
+        targetLogR : np.ndarray(shape=19)
+            Log R values which dsep requires
+        targetLogT : np.ndarray(shape=70)
+            Log T values which dsep requires
+        Opacity : np.ndarray(shape=(70, 19))
+            Opacity array now interpolated into LogR, LogT space from rho LogT
+            space and sampled at the exact LogR and LogT values required.
+    """
+    # build a function that can interpolate log opacity on a mass density log
+    #  temperature grid
+    kappaFunc = interp2d(LogT, rho, RMO, kind='cubic')
+
+    # mapping from T, R to rho
+    rhof = lambda T, R: R*((T*1e-6)**3)
+
+    # The target LogR an LogT grids which we would like to use
+    targetLogT = get_target_log_T()
+    targetLogR = get_target_log_R()
+
+    # The array to be filled with the converted opaicities
+    opacity = np.zeros(shape=(targetLogT.shape[0], targetLogR.shape[0]))
+
+    # This function maps the vector function kappaFunc to a scaler function
+    #  so that for a given target R and temperature array you get out an 
+    #  1D array not a 2D array. There is probably a more elegant way of doing
+    #  this. However, theis seems to work well enough and is not slow persay.
+    opacityF = lambda x, RTarg: kappaFunc(x, rhof(10**x, 10**RTarg))
+
+    for i, logR in enumerate(targetLogR):
+        # vectorize it so I can call it. However, this can only take a function
+        #  of one argument so use an anoymous function to hide the second
+        #  argument
+        f = np.vectorize(lambda x: opacityF(x, logR))
+        opacity[:, i] = f(targetLogT)
+
+    return targetLogR, targetLogT, opacity
+
 def format_TOPS_to_OPAL(
         TOPSTable: str,
         comp: tuple,
@@ -560,7 +455,7 @@ def format_TOPS_to_OPAL(
             Log rossland mean opacities for the LogT and LogR arrays
     """
     # Parse the raw TOPS data into a usable form
-    rhoInit, logTInit, OPALTableInit = parse_RMO_TOPS_table_file(TOPSTable)
+    rhoInit, logTInit, OPALTableInit = load_tops(TOPSTable)
 
     # Interpolate raw TOPS data onto the LogR LogT grid DSEP expects
     LogR, LogT, LogRMO = convert_rho_2_LogR(rhoInit, logTInit, OPALTableInit)
