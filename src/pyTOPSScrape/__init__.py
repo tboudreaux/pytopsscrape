@@ -36,8 +36,13 @@ Assuming you have the files GS98.abun and rescalings.dat in your current
 working directory
 
 Command Line
-----------------------------
+------------
 >>> generateTOPStables GS98.abun rescalings.dat -d ./rawOutput -o GS98.opac -j 20
+
+This will save intermediate results too the folder rawOutput (which must *not*
+exist before running this script). Moreover, this will use 20 concurrent
+processes to query. This helps speed up the script as it is network and not CPU
+limited.
 
 Python Interface
 ----------------
