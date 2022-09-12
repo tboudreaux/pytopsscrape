@@ -5,11 +5,11 @@ pyTOPSScrape
 A package which aims to make the programmatic retrieval and use of high
 temperature radiative opacity tables from LANL somewhat simple
 
-pyTOPSScrape provides both a command line and a python interface. The command
+pyTOPSScrape provides both a command line and a Python interface. The command
 line interface runs through the generateTOPStables script (which will have been
 installed to your path when you installed this package)
 
-The python interface can mimic the full command line interface (including error
+The Python interface can mimic the full command line interface (including error
 checking and rate limiting) using the full_run function. If however, you wish
 to dig down to a more granular level the api module includes both query and
 convert sub modules which may be composed as needed.
@@ -39,7 +39,7 @@ Command Line
 ------------
 >>> generateTOPStables GS98.abun rescalings.dat -d ./rawOutput -o GS98.opac -j 20
 
-This will save intermediate results too the folder rawOutput (which must *not*
+This will save intermediate results to the folder rawOutput (which must *not*
 exist before running this script). Moreover, this will use 20 concurrent
 processes to query. This helps speed up the script as it is network and not CPU
 limited.
@@ -66,7 +66,7 @@ function.
 
 Alternatively, you can call pyTOPSScrape in a more granular manner. For example, 
 if you just wish to query the tables from the TOPS web form but not perform any
-conversion on them one could use the following python code.
+conversion on them one could use the following Python code.
 
 >>> from pyTOPSScrape.api import call
 >>> import os
@@ -76,7 +76,7 @@ conversion on them one could use the following python code.
 
 Additional Examples
 ---------------------
-Examples_ of both the command line interface and the python interface (notebook_) are
+Examples_ of both the command line interface and the Python interface (notebook_) are
 included in the pyTOPSScrape repository.
 
 .. _Examples: https://github.com/tboudreaux/pytopsscrape/tree/master/examples
@@ -98,7 +98,7 @@ Optional Arguments
   -h, --help            show this help message and exit
   -f, --force           force the generation of new abunance tables
   -d OUTPUTDIRECTORY, --outputDirectory OUTPUTDIRECTORY
-                        directory to save abundance files too
+                        directory to save abundance files to
   --noopal              Run the code to convert TOPS table toOPAL compatible tables
   --nofetch             do not fetch opacity tables from TOPS
   -o OUTPUT, --output OUTPUT
@@ -189,7 +189,7 @@ LANL here!
 
 Additionally, pyTOPSScrape caches the raw query results to whatever directory
 is specified by the -d or --outputDirectory flag. This is so that if you want
-to implement your own converted you can do so without constantly re running the
+to implement your own converter you can do so without constantly re running the
 query functions. These results are cached in whatever directory is set in the
 --outputDirectory (or -d) command line option. To call the command line
 interface with cache usage enabled use the --nofetch flag. If you want to fetch
