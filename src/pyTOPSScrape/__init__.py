@@ -1,4 +1,5 @@
 """
+============
 pyTOPSScrape
 ============
 A package which aims to make the programmatic retrieval and use of high
@@ -13,6 +14,7 @@ checking and rate limiting) using the full_run function. If however, you wish
 to dig down to a more granular level the api module includes both query and
 convert sub modules which may be composed as needed.
 
+============
 Installation
 ============
 PyPi
@@ -31,7 +33,32 @@ Command Line Usage Example
 ----------------------------
 >>> generateTOPStables GS98.abun rescalings.dat -d ./rawOutput -o GS98.opac -j 20
 
+======================
+Command Line Arguments
+======================
+:usage: generateTOPStables [-h] [-f] [-d OUTPUTDIRECTORY] [--noopal] [--nofetch] [-o OUTPUT] [--hardforce] [-j JOBS] [--rect] abunTable abunMap
 
+Positional Arguments
+--------------------
+:abunTable: Table to pull abundances from. If set numFracProgram must point to executable expecting table input
+:abunMap: Map of which classical compositions to query the TOPS web form for. Each classical composition will be achieved by rescaling the base composition described in the abunTable
+
+Optional Arguments
+------------------
+  -h, --help            show this help message and exit
+  -f, --force           force the generation of new abunance tables
+  -d OUTPUTDIRECTORY, --outputDirectory OUTPUTDIRECTORY
+                        directory to save abundance files too
+  --noopal              Run the code to convert TOPS table toOPAL compatible tables
+  --nofetch             do not fetch opacity tables from TOPS
+  -o OUTPUT, --output OUTPUT
+                        file to write OPAL formated table to
+  --hardforce           Override all already extant directories
+  -j JOBS, --jobs JOBS  Number of processes to query the TOPS web form on
+  --rect                if True store OPAL tables rectangurally. This is not how DSEP uses tables; however, by way of wider applicability
+                        --rect may be used
+
+==================
 Input File Formats
 ==================
 pyTOPSScrape requires two input files to run. One (the first positional
@@ -82,6 +109,7 @@ The map file should be in the following form
 Where each row is X,Y,Z. The number of rows in this file will correspond to the
 number of queries issued against the TOPS web form
 
+=======
 Testing
 =======
 pyTOPSScrape ships with a number of tests which should be run to make sure that
@@ -92,6 +120,16 @@ a script has been included. From the pyTOPSScrape root directory
 >>> cd tests
 >>> ./runTests.sh
 
+=====================
+pyTOPSScrape Examples
+=====================
+Examples_ of both the command line interface and the python interface (notebook_) are
+included in the pyTOPSScrape repository.
+
+.. _Examples: https://github.com/tboudreaux/pytopsscrape/tree/master/examples
+.. _notebook:  https://github.com/tboudreaux/pytopsscrape/blob/master/examples/Notebooks/pyTOPSScrapeInterface.ipynb
+
+====================
 Etiquette & Cacheing
 ====================
 pyTOPSScrape makes use web servers hosted at Los Alamos National Labs (LANL).
@@ -122,14 +160,11 @@ then convert these to DSEP's OPAL format using the command
 
 >>> generateTOPStables GS98.abun rescalings.dat -d ./rawOutput -o GS98.opac -j 20 --nofetch
 
-Notes
-=====
-Website [1]_
+==================
+Notes & References
+==================
+:Website: https://aphysics2.lanl.gov/apps/
 
-Paper Describing Opacity Tables [2]_
-
-[1] https://aphysics2.lanl.gov/apps/
-
-[2] Colgan, James, et al. "A new generation of Los Alamos opacity tables." The Astrophysical Journal 817.2 (2016): 116.
+:Paper Describing Opacity Tables: Colgan, James, et al. "A new generation of Los Alamos opacity tables." The Astrophysical Journal 817.2 (2016): 116.
 """
 from pyTOPSScrape.scripts.main import full_run
