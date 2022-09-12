@@ -1,1 +1,1 @@
-from .err import _error_check
+from .err import error_check

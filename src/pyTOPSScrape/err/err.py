@@ -3,7 +3,7 @@ from pyTOPSScrape.api.utils import validate_extant_tables
 import os
 import shutil
 
-def _error_check(kwargs : dict, mode : int):
+def error_check(kwargs : dict, mode : int):
     """
     Basic error checking to run
 

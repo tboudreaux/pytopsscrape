@@ -1,5 +1,5 @@
 from pyTOPSScrape.api import call
-from pyTOPSScrape.err import _error_check
+from pyTOPSScrape.err import error_check
 from pyTOPSScrape.api import TOPS_2_OPAL
 
 import os
@@ -47,13 +47,17 @@ def full_run(kwargs : dict):
                     Path to save DSEP/OPAL formated opacity table to.
                 * jobs (*int*)
                     Number of threads to run TOPS query with
+                * rect (*bool*)
+                    Flag which controls whether or not to clip corners of OPAL
+                    tables to put them into the non rectangular format DSEP
+                    expects. If False then this will happen (output will be non
+                    rectangular). If True then this will not happen (output
+                    will be rectangular).
     Notes
     -----
         If there is an issue on the server end with TOPS this program will
         attempt to retry 10 times per composition by default (defined with the
         nAttepmts variable).
-
-
     """
 
 
@@ -61,7 +65,7 @@ def full_run(kwargs : dict):
     #  already done and you just want to reparse into a DSEP formated table
     #  already queried files.
     if not kwargs["nofetch"]:
-        _error_check(kwargs, 0)
+        error_check(kwargs, 0)
         os.mkdir(kwargs["outputDirectory"])
 
         call(
@@ -76,7 +80,7 @@ def full_run(kwargs : dict):
     #   so that if the raw tables have already been quieried they do not need
     #   to be again.
     if not kwargs["noopal"]:
-        _error_check(kwargs, 1)
+        error_check(kwargs, 1)
 
         TOPS_2_OPAL(
                 kwargs['outputDirectory'],
