@@ -190,11 +190,52 @@ convert sub modules which may be composed as needed.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="command-line-usage-example">
-<h3>Command Line Usage Example<a class="headerlink" href="#command-line-usage-example" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="simple-examples">
+<h2>Simple Examples<a class="headerlink" href="#simple-examples" title="Permalink to this headline">¶</a></h2>
+<p>Assuming you have the files GS98.abun and rescalings.dat in your current
+working directory</p>
+<div class="section" id="command-line">
+<h3>Command Line<a class="headerlink" href="#command-line" title="Permalink to this headline">¶</a></h3>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generateTOPStables</span> <span class="n">GS98</span><span class="o">.</span><span class="n">abun</span> <span class="n">rescalings</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="o">./</span><span class="n">rawOutput</span> <span class="o">-</span><span class="n">o</span> <span class="n">GS98</span><span class="o">.</span><span class="n">opac</span> <span class="o">-</span><span class="n">j</span> <span class="mi">20</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="python-interface">
+<h3>Python Interface<a class="headerlink" href="#python-interface" title="Permalink to this headline">¶</a></h3>
+<p>You can replicate the behavior of the command line using the <cite>full_run()</cite>
+function.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyTOPSScrape</span> <span class="kn">import</span> <span class="n">full_run</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">&gt;&gt;&gt; </span>       <span class="s2">&quot;abunTable&quot;</span><span class="p">:</span> <span class="s2">&quot;./GS98.abun&quot;</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>       <span class="s2">&quot;abunMap&quot;</span><span class="p">:</span> <span class="s2">&quot;./exampleAbunMap.dat&quot;</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>       <span class="s2">&quot;force&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>       <span class="s2">&quot;outputDirectory&quot;</span><span class="p">:</span> <span class="s2">&quot;./rawOutput&quot;</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>       <span class="s2">&quot;noopal&quot;</span> <span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>       <span class="s2">&quot;nofetch&quot;</span> <span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>       <span class="s2">&quot;output&quot;</span> <span class="p">:</span> <span class="s2">&quot;./GS98TestResult.opac&quot;</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>       <span class="s2">&quot;hardforce&quot;</span> <span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>       <span class="s2">&quot;jobs&quot;</span> <span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>       <span class="s2">&quot;rect&quot;</span> <span class="p">:</span> <span class="kc">False</span>
+<span class="gp">&gt;&gt;&gt; </span>       <span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">full_run</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Alternatively, you can call pyTOPSScrape in a more granular manner. For example,
+if you just wish to query the tables from the TOPS web form but not perform any
+conversion on them one could use the following python code.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyTOPSScrape.api</span> <span class="kn">import</span> <span class="n">call</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;./rawOutput&quot;</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s2">&quot;./rawOutput&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">call</span><span class="p">(</span><span class="s2">&quot;./rescalings.dat&quot;</span><span class="p">,</span> <span class="s2">&quot;./GS98.dat&quot;</span><span class="p">,</span> <span class="s2">&quot;./rawOutput&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="additional-examples">
+<h3>Additional Examples<a class="headerlink" href="#additional-examples" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/tboudreaux/pytopsscrape/tree/master/examples">Examples</a> of both the command line interface and the python interface (<a class="reference external" href="https://github.com/tboudreaux/pytopsscrape/blob/master/examples/Notebooks/pyTOPSScrapeInterface.ipynb">notebook</a>) are
+included in the pyTOPSScrape repository.</p>
 </div>
 </div>
 <div class="section" id="command-line-arguments">
@@ -244,7 +285,7 @@ convert sub modules which may be composed as needed.</p>
 <dd><p>Number of processes to query the TOPS web form on</p>
 </dd>
 <dt><kbd><span class="option">--rect</span></kbd></dt>
-<dd><p>if True store OPAL tables rectangurally. This is not how DSEP uses tables; however, by way of wider applicability
+<dd><p>if True store OPAL tables rectangurally. This is not how <abbr title="Dartmouth Stellar Evolution Program">DSEP</abbr> uses tables; however, by way of wider applicability
 –rect may be used</p>
 </dd>
 </dl>
@@ -295,7 +336,10 @@ metal mass fractions wrt. Z will be maintained)</p>
 </pre></div>
 </div>
 <p>Where each row is X,Y,Z. The number of rows in this file will correspond to the
-number of queries issued against the TOPS web form</p>
+number of queries issued against the TOPS web form (i.e. if you have a Map file
+with three rows then the TOPS webform will be queried three times. For <abbr title="Dartmouth Stellar Evolution Program">DSEP</abbr>
+we use a file of 126 rows so for a single <abbr title="Dartmouth Stellar Evolution Program">DSEP</abbr> formatted OPAL table we merge the
+contents of 126 queries against the TOPS webform)</p>
 </div>
 </div>
 <div class="section" id="testing">
@@ -308,11 +352,6 @@ a script has been included. From the pyTOPSScrape root directory</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="o">./</span><span class="n">runTests</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="pytopsscrape-examples">
-<h2>pyTOPSScrape Examples<a class="headerlink" href="#pytopsscrape-examples" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://github.com/tboudreaux/pytopsscrape/tree/master/examples">Examples</a> of both the command line interface and the python interface (<a class="reference external" href="https://github.com/tboudreaux/pytopsscrape/blob/master/examples/Notebooks/pyTOPSScrapeInterface.ipynb">notebook</a>) are
-included in the pyTOPSScrape repository.</p>
 </div>
 <div class="section" id="etiquette-cacheing">
 <h2>Etiquette &amp; Cacheing<a class="headerlink" href="#etiquette-cacheing" title="Permalink to this headline">¶</a></h2>
@@ -338,7 +377,7 @@ tables and don’t want to run the conversion set use the –noopal flag.</p>
 </div>
 <p>this will save all the raw output to the directory ./rawOutput (if you run the
 first example from this docs page this will also cache the results). You can
-then convert these to DSEP’s OPAL format using the command</p>
+then convert these to <abbr title="Dartmouth Stellar Evolution Program">DSEP</abbr>’s OPAL format using the command</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generateTOPStables</span> <span class="n">GS98</span><span class="o">.</span><span class="n">abun</span> <span class="n">rescalings</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="o">./</span><span class="n">rawOutput</span> <span class="o">-</span><span class="n">o</span> <span class="n">GS98</span><span class="o">.</span><span class="n">opac</span> <span class="o">-</span><span class="n">j</span> <span class="mi">20</span> <span class="o">--</span><span class="n">nofetch</span>
 </pre></div>
 </div>
@@ -406,7 +445,12 @@ then convert these to DSEP’s OPAL format using the command</p>
 <li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.html#installation">Installation</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.html#pypi">PyPi</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.html#github">GitHub</a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.html#command-line-usage-example">Command Line Usage Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.html#simple-examples">Simple Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.html#command-line">Command Line</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.html#python-interface">Python Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.html#additional-examples">Additional Examples</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.html#command-line-arguments">Command Line Arguments</a><ul>
@@ -420,7 +464,6 @@ then convert these to DSEP’s OPAL format using the command</p>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.html#testing">Testing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.html#pytopsscrape-examples">pyTOPSScrape Examples</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.html#etiquette-cacheing">Etiquette &amp; Cacheing</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.html#notes-references">Notes &amp; References</a></li>
 </ul>

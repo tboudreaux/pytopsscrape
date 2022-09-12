@@ -29,9 +29,54 @@ GitHub
 >>> cd pytopsscrape
 >>> python setup.py install
 
-Command Line Usage Example
+===============
+Simple Examples
+===============
+Assuming you have the files GS98.abun and rescalings.dat in your current
+working directory
+
+Command Line
 ----------------------------
 >>> generateTOPStables GS98.abun rescalings.dat -d ./rawOutput -o GS98.opac -j 20
+
+Python Interface
+----------------
+You can replicate the behavior of the command line using the `full_run()`
+function. 
+
+>>> from pyTOPSScrape import full_run
+>>> kwargs = kwargs = {
+>>>        "abunTable": "./GS98.abun",
+>>>        "abunMap": "./exampleAbunMap.dat",
+>>>        "force": False,
+>>>        "outputDirectory": "./rawOutput",
+>>>        "noopal" : False,
+>>>        "nofetch" : False,
+>>>        "output" : "./GS98TestResult.opac",
+>>>        "hardforce" : True,
+>>>        "jobs" : 20,
+>>>        "rect" : False
+>>>        }
+>>> full_run(kwargs)
+
+Alternatively, you can call pyTOPSScrape in a more granular manner. For example, 
+if you just wish to query the tables from the TOPS web form but not perform any
+conversion on them one could use the following python code.
+
+>>> from pyTOPSScrape.api import call
+>>> import os
+>>> if not os.path.exists("./rawOutput"):
+>>>     os.mkdir("./rawOutput")
+>>> call("./rescalings.dat", "./GS98.dat", "./rawOutput", 20)
+
+Additional Examples
+---------------------
+Examples_ of both the command line interface and the python interface (notebook_) are
+included in the pyTOPSScrape repository.
+
+.. _Examples: https://github.com/tboudreaux/pytopsscrape/tree/master/examples
+.. _notebook:  https://github.com/tboudreaux/pytopsscrape/blob/master/examples/Notebooks/pyTOPSScrapeInterface.ipynb
+
 
 ======================
 Command Line Arguments
@@ -55,7 +100,7 @@ Optional Arguments
                         file to write OPAL formated table to
   --hardforce           Override all already extant directories
   -j JOBS, --jobs JOBS  Number of processes to query the TOPS web form on
-  --rect                if True store OPAL tables rectangurally. This is not how DSEP uses tables; however, by way of wider applicability
+  --rect                if True store OPAL tables rectangurally. This is not how :abbr:`DSEP (Dartmouth Stellar Evolution Program)` uses tables; however, by way of wider applicability
                         --rect may be used
 
 ==================
@@ -107,7 +152,10 @@ The map file should be in the following form
     0.75,0.23,0.02
 
 Where each row is X,Y,Z. The number of rows in this file will correspond to the
-number of queries issued against the TOPS web form
+number of queries issued against the TOPS web form (i.e. if you have a Map file
+with three rows then the TOPS webform will be queried three times. For :abbr:`DSEP (Dartmouth Stellar Evolution Program)`
+we use a file of 126 rows so for a single :abbr:`DSEP (Dartmouth Stellar Evolution Program)` formatted OPAL table we merge the
+contents of 126 queries against the TOPS webform)
 
 =======
 Testing
@@ -120,14 +168,6 @@ a script has been included. From the pyTOPSScrape root directory
 >>> cd tests
 >>> ./runTests.sh
 
-=====================
-pyTOPSScrape Examples
-=====================
-Examples_ of both the command line interface and the python interface (notebook_) are
-included in the pyTOPSScrape repository.
-
-.. _Examples: https://github.com/tboudreaux/pytopsscrape/tree/master/examples
-.. _notebook:  https://github.com/tboudreaux/pytopsscrape/blob/master/examples/Notebooks/pyTOPSScrapeInterface.ipynb
 
 ====================
 Etiquette & Cacheing
@@ -156,7 +196,7 @@ As an example, if you have already queried the TOPS web form using the command
 
 this will save all the raw output to the directory ./rawOutput (if you run the
 first example from this docs page this will also cache the results). You can
-then convert these to DSEP's OPAL format using the command
+then convert these to :abbr:`DSEP (Dartmouth Stellar Evolution Program)`'s OPAL format using the command
 
 >>> generateTOPStables GS98.abun rescalings.dat -d ./rawOutput -o GS98.opac -j 20 --nofetch
 
