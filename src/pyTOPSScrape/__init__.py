@@ -199,7 +199,7 @@ As an example, if you have already queried the TOPS web form using the command
 
 >>> generateTOPStables GS98.abun rescalings.dat -d ./rawOutput -o GS98.opac -j 20 --noopal
 
-this will save all the raw output to the directory ./rawOutput (if you run the
+This will save all the raw output to the directory ./rawOutput (if you run the
 first example from this docs page this will also cache the results). You can
 then convert these to :abbr:`DSEP (Dartmouth Stellar Evolution Program)`'s OPAL format using the command
 

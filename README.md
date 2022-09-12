@@ -5,6 +5,8 @@
 
 <a href="https://algebrist.com/~tboudreaux/docs/pyTOPSScrape/">Documentation Mirror</a>
 
+<a href="https://raw.githubusercontent.com/tboudreaux/pytopsscrape/master/docs/build/latex/pytopsscrape.pdf">PDF Documentation</a>
+
 The <a href="https://aphysics2.lanl.gov/apps/">TOPS webform</a> provides access
 to some of the most up to date high temperature radiative opacities. However,
 entering compositions manually into a webpage can be a chore. Especially when
