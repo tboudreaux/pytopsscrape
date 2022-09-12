@@ -191,6 +191,38 @@
 </div>
 <div class="section" id="module-pyTOPSScrape.err.err">
 <span id="pytopsscrape-err-err-module"></span><h2>pyTOPSScrape.err.err module<a class="headerlink" href="#module-pyTOPSScrape.err.err" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pyTOPSScrape.err.err.error_check">
+<span class="sig-prename descclassname"><span class="pre">pyTOPSScrape.err.err.</span></span><span class="sig-name descname"><span class="pre">error_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyTOPSScrape.err.err.error_check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Basic error checking to run</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> (<em>dict</em>) – keyword argument dictionary used by main function</p></li>
+<li><p><strong>mode</strong> (<em>int</em>) – <dl class="simple">
+<dt>Define error check mode.</dt><dd><ul>
+<li><p>0 : web mode (check errors for TOPS erb query)</p></li>
+<li><p>1 : opal mode (convert tops to opal format)</p></li>
+</ul>
+</dd>
+</dl>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>OSError</strong> – If all of the TOPS files have been verrified as downloaded and the
+    force flag has been set.</p></li>
+<li><p><strong>OSError</strong> – If all of the TOPS files have not been verified but some have
+    downloaded and the force flag has not been set</p></li>
+<li><p><strong>OSError</strong> – If all of the TOPS files have be verified and the force flag has
+    not been set.</p></li>
+<li><p><strong>OSError</strong> – If opal has been set but the TOPS files are unable to be validated.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 <div class="section" id="module-pyTOPSScrape.err">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyTOPSScrape.err" title="Permalink to this headline">¶</a></h2>
