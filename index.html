@@ -197,6 +197,60 @@ convert sub modules which may be composed as needed.</p>
 </div>
 </div>
 </div>
+<div class="section" id="command-line-arguments">
+<h2>Command Line Arguments<a class="headerlink" href="#command-line-arguments" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">usage</dt>
+<dd class="field-odd"><p>generateTOPStables [-h] [-f] [-d OUTPUTDIRECTORY] [–noopal] [–nofetch] [-o OUTPUT] [–hardforce] [-j JOBS] [–rect] abunTable abunMap</p>
+</dd>
+</dl>
+<div class="section" id="positional-arguments">
+<h3>Positional Arguments<a class="headerlink" href="#positional-arguments" title="Permalink to this headline">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">abunTable</dt>
+<dd class="field-odd"><p>Table to pull abundances from. If set numFracProgram must point to executable expecting table input</p>
+</dd>
+<dt class="field-even">abunMap</dt>
+<dd class="field-even"><p>Map of which classical compositions to query the TOPS web form for. Each classical composition will be achieved by rescaling the base composition described in the abunTable</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="optional-arguments">
+<h3>Optional Arguments<a class="headerlink" href="#optional-arguments" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><dl class="option-list">
+<dt><kbd><span class="option">-h</span>, <span class="option">--help</span></kbd></dt>
+<dd><p>show this help message and exit</p>
+</dd>
+<dt><kbd><span class="option">-f</span>, <span class="option">--force</span></kbd></dt>
+<dd><p>force the generation of new abunance tables</p>
+</dd>
+<dt><kbd><span class="option">-d <var>OUTPUTDIRECTORY</var></span>, <span class="option">--outputDirectory <var>OUTPUTDIRECTORY</var></span></kbd></dt>
+<dd><p>directory to save abundance files too</p>
+</dd>
+<dt><kbd><span class="option">--noopal</span></kbd></dt>
+<dd><p>Run the code to convert TOPS table toOPAL compatible tables</p>
+</dd>
+<dt><kbd><span class="option">--nofetch</span></kbd></dt>
+<dd><p>do not fetch opacity tables from TOPS</p>
+</dd>
+<dt><kbd><span class="option">-o <var>OUTPUT</var></span>, <span class="option">--output <var>OUTPUT</var></span></kbd></dt>
+<dd><p>file to write OPAL formated table to</p>
+</dd>
+<dt><kbd><span class="option">--hardforce</span></kbd></dt>
+<dd><p>Override all already extant directories</p>
+</dd>
+<dt><kbd><span class="option">-j <var>JOBS</var></span>, <span class="option">--jobs <var>JOBS</var></span></kbd></dt>
+<dd><p>Number of processes to query the TOPS web form on</p>
+</dd>
+<dt><kbd><span class="option">--rect</span></kbd></dt>
+<dd><p>if True store OPAL tables rectangurally. This is not how DSEP uses tables; however, by way of wider applicability
+–rect may be used</p>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+</div>
 <div class="section" id="input-file-formats">
 <h2>Input File Formats<a class="headerlink" href="#input-file-formats" title="Permalink to this headline">¶</a></h2>
 <p>pyTOPSScrape requires two input files to run. One (the first positional
@@ -255,6 +309,11 @@ a script has been included. From the pyTOPSScrape root directory</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="pytopsscrape-examples">
+<h2>pyTOPSScrape Examples<a class="headerlink" href="#pytopsscrape-examples" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://github.com/tboudreaux/pytopsscrape/tree/master/examples">Examples</a> of both the command line interface and the python interface (<a class="reference external" href="https://github.com/tboudreaux/pytopsscrape/blob/master/examples/Notebooks/pyTOPSScrapeInterface.ipynb">notebook</a>) are
+included in the pyTOPSScrape repository.</p>
+</div>
 <div class="section" id="etiquette-cacheing">
 <h2>Etiquette &amp; Cacheing<a class="headerlink" href="#etiquette-cacheing" title="Permalink to this headline">¶</a></h2>
 <p>pyTOPSScrape makes use web servers hosted at Los Alamos National Labs (LANL).
@@ -283,11 +342,17 @@ then convert these to DSEP’s OPAL format using the command</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generateTOPStables</span> <span class="n">GS98</span><span class="o">.</span><span class="n">abun</span> <span class="n">rescalings</span><span class="o">.</span><span class="n">dat</span> <span class="o">-</span><span class="n">d</span> <span class="o">./</span><span class="n">rawOutput</span> <span class="o">-</span><span class="n">o</span> <span class="n">GS98</span><span class="o">.</span><span class="n">opac</span> <span class="o">-</span><span class="n">j</span> <span class="mi">20</span> <span class="o">--</span><span class="n">nofetch</span>
 </pre></div>
 </div>
-<p class="rubric">Notes</p>
-<p>Website <a href="#id3"><span class="problematic" id="id1">[1]_</span></a></p>
-<p>Paper Describing Opacity Tables <a href="#id4"><span class="problematic" id="id2">[2]_</span></a></p>
-<p>[1] <a class="reference external" href="https://aphysics2.lanl.gov/apps/">https://aphysics2.lanl.gov/apps/</a></p>
-<p>[2] Colgan, James, et al. “A new generation of Los Alamos opacity tables.” The Astrophysical Journal 817.2 (2016): 116.</p>
+</div>
+<div class="section" id="notes-references">
+<h2>Notes &amp; References<a class="headerlink" href="#notes-references" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">Website</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://aphysics2.lanl.gov/apps/">https://aphysics2.lanl.gov/apps/</a></p>
+</dd>
+<dt class="field-even">Paper Describing Opacity Tables</dt>
+<dd class="field-even"><p>Colgan, James, et al. “A new generation of Los Alamos opacity tables.” The Astrophysical Journal 817.2 (2016): 116.</p>
+</dd>
+</dl>
 </div>
 <div class="toctree-wrapper compound">
 <ul>
@@ -344,13 +409,20 @@ then convert these to DSEP’s OPAL format using the command</p>
 <li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.html#command-line-usage-example">Command Line Usage Example</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.html#command-line-arguments">Command Line Arguments</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.html#positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.html#optional-arguments">Optional Arguments</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.html#input-file-formats">Input File Formats</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.html#composition-file">Composition file</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyTOPSScrape.html#map-file">Map file</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.html#testing">Testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.html#pytopsscrape-examples">pyTOPSScrape Examples</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.html#etiquette-cacheing">Etiquette &amp; Cacheing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyTOPSScrape.html#notes-references">Notes &amp; References</a></li>
 </ul>
 </li>
 </ul>
