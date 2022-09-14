@@ -14,7 +14,7 @@ with open("README.md", "r", encoding="utf-8") as f:
 # setuptools.setup(
 setup(
         name="pyTOPSScrape",
-        version="0.5.1",
+        version="0.5.2",
         author="Thomas M. Boudreaux",
         author_email="thomas@boudreauxmail.com",
         description="Python bindings around TOPS webform for OPLIB opacities",
