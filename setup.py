@@ -23,6 +23,7 @@ setup(
         url="https://github.com/tboudreaux/pytopsscrape",
         classifiers=[
             "Programming Language :: Python",
+            "Operating System :: MacOS :: MacOS X",
             "Operating System :: POSIX :: Linux",
             "Topic :: Scientific/Engineering :: Astronomy",
         ],
