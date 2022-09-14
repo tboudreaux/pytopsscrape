@@ -51,7 +51,10 @@ custom function in place of TOPS_2_OPAL)
 </ul>
 
 #### pip
-pyTOPSScrape is not yet available on pip but will be soon.
+If you install with pip all the dependencies should be automatically installed.
+```bash
+pip install pyTOPSScrape
+```
 
 #### Source
 ```bash
