@@ -1,6 +1,6 @@
 # pyTOPSScrape
 ### A tool for scraping OPLIB opacities from the TOPS web form and converting them into a format more similar to that used by OPAL
-
+![Liscence](https://img.shields.io/github/license/tboudreaux/pyTOPSSCrape?style=for-the-badge)
 #### Documentation
 This README provides a basic overview; however, more in depth documentation, including 
 detailed descriptions of command line arguments and file formats may be found in
