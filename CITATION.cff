@@ -5,5 +5,5 @@ authors:
   given-names: "Thomas"
   orcid: "https://orcid.org/0000-0002-2600-7513"
 title: tboudreaux/pytopsscrape: pyTOPSScrape v1.0
-version: v1.0
+version: 1.0
 date-released: 2022-09-19
