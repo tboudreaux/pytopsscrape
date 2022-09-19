@@ -1,9 +1,9 @@
 cff-version: 1.1.0
 message: "If you use this software, please cite it as below."
 authors:
-  - family-names: "Boudreaux"
-    given-names: "Thomas"
-    orcid: "https://orcid.org/0000-0002-2600-7513"
+ - family-names: "Boudreaux"
+ given-names: "Thomas"
+ orcid: "https://orcid.org/0000-0002-2600-7513"
 title: tboudreaux/pytopsscrape: pyTOPSScrape v1.0
 version: v1.0
 date-released: 2022-09-19
