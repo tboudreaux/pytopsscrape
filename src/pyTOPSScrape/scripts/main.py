@@ -18,8 +18,6 @@ def full_run(kwargs : dict):
 
                 * abunTable (*str*)
                     Path of checmical abundance table to use for composition.
-                    Format of this table is defined in the ext module
-                    documentation.
                 * outputDirectory (*str*)
                     Directory to save results of numFrac executable to.
                 * nofetch (*bool*)

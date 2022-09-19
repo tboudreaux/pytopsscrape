@@ -28,8 +28,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate opacity table in a"
                                     " format dsep can work with from TOPS")
     parser.add_argument("abunTable", type=str, help="Table to pull abundances"
-                        " from. If set numFracProgram must point to executable"
-                        " expecting table input")
+                        " from.")
     parser.add_argument("abunMap", type=str, help="map of which classical "
                         "compositions to query the TOPS web form for. Each "
                         "classical composition will be achived by rescaling "
