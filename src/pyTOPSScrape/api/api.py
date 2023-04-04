@@ -26,7 +26,8 @@ TOPS_URL = "https://aphysics2.lanl.gov/apps/"
 def submit_TOPS_form(
         mixString: str,
         mixName:str,
-        massFrac: bool=True
+        massFrac: bool=True,
+        opacityType='plank'
         ) -> bytes:
     """
     Open the Los Alamos opacity website, submit a given composition and then
@@ -39,9 +40,10 @@ def submit_TOPS_form(
             which will be submitted in the webform for mixture
         mixName : string
             name to be used in the webform
-
         massFrac : bool, default=True
             Submit as massFrac instead of numberFrac
+        opacityType : str, default='plank'
+            Type of opacity to query. Options are 'plank' and 'multi'
 
     Returns
     -------
@@ -69,6 +71,11 @@ def submit_TOPS_form(
     br.form['rup'] = "1.0e7"
     br.form['nr'] = '100'
 
+    if opacityType == 'multi':
+        br.form.find_control(name="datype").value = ['groups']
+    if opacityType == 'plank':
+        br.form.find_control(name="datype").value = ['gray']
+
 
     # get to the first submission page
     r1 = br.submit()
@@ -81,7 +88,7 @@ def submit_TOPS_form(
     br.close()
     return tableHTML
 
-def TOPS_query(mixString: str, mixName: str, nAttempts: int) -> bytes:
+def TOPS_query(mixString: str, mixName: str, nAttempts: int, opacityType : str = 'plank') -> bytes:
     """
     Query TOPS form and retry n times
 
@@ -94,6 +101,8 @@ def TOPS_query(mixString: str, mixName: str, nAttempts: int) -> bytes:
             name to be used in the webform
         nAttemptes : int
             How many times to reattempt after a failure.
+        opacityType : str, default='plank'
+            Type of opacity to query. Options are 'plank' and 'multi'
 
     Returns
     -------
@@ -104,7 +113,7 @@ def TOPS_query(mixString: str, mixName: str, nAttempts: int) -> bytes:
     attempts = 0
     while attempts < nAttempts:
         try:
-            tableHTML = submit_TOPS_form(mixString, mixName)
+            tableHTML = submit_TOPS_form(mixString, mixName, opacityType=opacityType)
             break
         except mechanize.HTTPError as e:
             attempts += 1
@@ -117,7 +126,7 @@ def TOPS_query(mixString: str, mixName: str, nAttempts: int) -> bytes:
     return tableHTML
 
 
-def query_and_parse(compList : list, outputDirectory: int, i: int, nAttempts: int=10):
+def query_and_parse(compList : list, outputDirectory: int, i: int, nAttempts: int=10, opacityType : str = 'plank'):
     """
     Async coroutine to query TOPS webform, parse the output, and write that
     to disk.
@@ -137,7 +146,15 @@ def query_and_parse(compList : list, outputDirectory: int, i: int, nAttempts: in
             it is, even in parallel processing.
         nAttempts : int, default=10
             Number of time to retry TOPS query before failing out
+        opacityType : str, default='plank'
+            Type of opacity to query. Options are 'plank' and 'multi'
+    Raises
+    ------
+        ValueError : if opacityType is not 'plank' or 'multi'
     """
+    if opacityType not in ['plank', 'multi']:
+        raise ValueError(f"opacityType must be 'plank' or 'multi' not {opacityType}")
+
     mixString = format_TOPS_string(compList)
     X = compList[0][1]
     Y = compList[1][1]
@@ -150,14 +167,14 @@ def query_and_parse(compList : list, outputDirectory: int, i: int, nAttempts: in
 
     assert 1 - continuity <= 1e-3
 
-    tableHTML = TOPS_query(mixString, mixName, nAttempts)
+    tableHTML = TOPS_query(mixString, mixName, nAttempts, opacityType=opacityType)
 
     table = parse_table(tableHTML)
 
     filePath = f"{outputDirectory}/OP:{i}_{X}_{Y}_{Z}.dat"
     return (table, filePath)
 
-def TOPS_query_async_distributor(compList : list, outputDirectory : str, njobs : int = 10):
+def TOPS_query_async_distributor(compList : list, outputDirectory : str, njobs : int = 10, nAttempts : int = 10, opacityType : str = 'plank'):
     """
     Distributes TOPS query jobs to different threads and gathers the results
     together. Writes out output.
@@ -174,13 +191,17 @@ def TOPS_query_async_distributor(compList : list, outputDirectory : str, njobs :
             Path to directory to save TOPS query results to.
         njobs : int, default=10
             Number of concurrent jobs to allow at a time.
+        nAttempts : int, default=10
+            Number of time to retry TOPS query before failing out
+        opacityType : str, default='plank'
+            Type of opacity to query. Options are 'plank' and 'multi'
     """
     with tqdm(total=len(compList), desc=f"Querying on {njobs} threads") as pbar:
         with ThreadPoolExecutor(njobs) as executor:
             jobs = list()
             results = list()
             for i, subComp in enumerate(compList):
-                jobs.append(executor.submit(query_and_parse, subComp, outputDirectory, i))
+                jobs.append(executor.submit(query_and_parse, subComp, outputDirectory, i, opacityType=opacityType))
             for job in futures.as_completed(jobs):
                 results.append(job.result())
                 pbar.update(1)
@@ -221,7 +242,7 @@ def parse_table(
     table = '\n'.join(table)
     return table
 
-def call(aMap: str, aTable: str, outputDir: str, jobs: int):
+def call(aMap: str, aTable: str, outputDir: str, jobs: int, opacityType: str = 'plank'):
     """
     Main TOPS psuedo API call function. Will save results to outputDir with
     file format OP:IDX_X_Y_Z.dat where IDX is the ID of the composition (parallel
@@ -240,6 +261,8 @@ def call(aMap: str, aTable: str, outputDir: str, jobs: int):
             Path to directory save TOPS query results into
         jobs : int
             Number of threads to query TOPS webform on
+        opacityType : str, default='plank'
+            Type of opacity to query. Options are 'plank' and 'multi'
 
     Examples
     --------
@@ -255,6 +278,18 @@ def call(aMap: str, aTable: str, outputDir: str, jobs: int):
     this will only work to a point. I find that around 20 workes is about the
     most that gives me any speed increase. This will somewhat depend on your
     computer though.
+
+    By default this will query the plank /  mean grey opacities. However,
+    if you want to query the multi-group opacities you can do so by passing
+    opacityType='multi' to call. For example
+
+    >>> call("./rescalings.dat", "./comp.dat", "./cache", 5, opacityType='multi')
+
+    Note that pyTOPSScrape does not have any further functionality to parse
+    the output of call for multi-group opacities. This is because the output
+    format is different from the output format of the mean grey / plank
+    opacities. If you would like to parse the output of the multi-group
+    opacities you will need to do so yourself.
     """
     parsed = open_and_parse(aTable)
     pContents = parse_abundance_map(aMap)
@@ -271,6 +306,6 @@ def call(aMap: str, aTable: str, outputDir: str, jobs: int):
 
         compList.append(subComp)
 
-    TOPS_query_async_distributor(compList, outputDir, njobs=jobs)
+    TOPS_query_async_distributor(compList, outputDir, njobs=jobs, opacityType=opacityType)
 
 

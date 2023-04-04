@@ -51,6 +51,12 @@ def full_run(kwargs : dict):
                     expects. If False then this will happen (output will be non
                     rectangular). If True then this will not happen (output
                     will be rectangular).
+                * multi (*bool*)
+                    Flag which controls whether or not to use the multi
+                    group opacity tables. If True then the multi group tables
+                    will be used. If False then the plank / gray mean
+                    opacity tables will be used. If this is true then
+                    noopal will be ignored and no conversion will take place.
     Notes
     -----
         If there is an issue on the server end with TOPS this program will
@@ -66,18 +72,24 @@ def full_run(kwargs : dict):
         error_check(kwargs, 0)
         os.mkdir(kwargs["outputDirectory"])
 
+        if kwargs['multi']:
+            opacType = 'multi'
+        else:
+            opacType = 'plank'
+
         call(
                 kwargs['abunMap'],
                 kwargs['abunTable'],
                 kwargs['outputDirectory'],
-                kwargs['jobs']
+                kwargs['jobs'],
+                opacType
             )
 
     # Convert the many files saved from the TOPS query to one file in the form
     #   DSEP expects. Mean to limit the number of calls to the LANL web server
     #   so that if the raw tables have already been quieried they do not need
     #   to be again.
-    if not kwargs["noopal"]:
+    if not kwargs["noopal"] and not kwargs["multi"]:
         error_check(kwargs, 1)
 
         TOPS_2_OPAL(

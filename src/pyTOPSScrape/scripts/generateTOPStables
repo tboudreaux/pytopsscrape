@@ -52,6 +52,10 @@ if __name__ == "__main__":
                         "True store OPAL tables rectangurally. This is not how "
                         "DSEP uses tables; however, by way of wider "
                         "applicability --rect may be used")
+    parser.add_argument("--multi", default=False, action="store_true", help="if "
+                        "query the multi-group opacities instead of the plank / "
+                        "grey mean opacities. Note that if --multi is used "
+                        "then --noopal will be automatically turned on")
 
     cliArgs = parser.parse_args()
     full_run(vars(cliArgs))

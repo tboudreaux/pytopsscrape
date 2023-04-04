@@ -87,4 +87,5 @@ def test_nofetch():
     assert targetDateCleaned == resultDateCleaned
 
 if __name__ == "__main__":
-    test_nofetch()
+    # test_nofetch()
+    test_full_stack()
