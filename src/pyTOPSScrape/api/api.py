@@ -21,7 +21,7 @@ import mechanize
 from typing import TextIO
 import numpy as np
 
-TOPS_URL = "https://aphysics2.lanl.gov/apps/"
+TOPS_URL = "https://aphysics2.lanl.gov"
 
 def submit_TOPS_form(
         mixString: str,
